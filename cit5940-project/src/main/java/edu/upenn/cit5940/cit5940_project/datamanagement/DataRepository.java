@@ -8,4 +8,5 @@ public class DataRepository {
 	private Map<String, Article> searchMap;
 	private Trie prefixTrie;
 	
+	
 }
