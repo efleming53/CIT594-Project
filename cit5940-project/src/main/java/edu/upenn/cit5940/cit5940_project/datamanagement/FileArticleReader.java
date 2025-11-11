@@ -2,7 +2,8 @@ package edu.upenn.cit5940.cit5940_project.datamanagement;
 
 import java.util.*;
 import edu.upenn.cit5940.cit5940_project.common.dto.*;
+import java.io.IOException;
 
-public interface FileReader {
-	List<Article> read(String filepath);
+public interface FileArticleReader {
+	public List<Article> read(String filepath) throws IOException;
 }

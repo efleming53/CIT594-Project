@@ -12,16 +12,16 @@ public class Article {
     // The number of fields required to construct an Article.
     public static final int EXPECTED_FIELD_COUNT = 16;
 
-    public Article(List<String> csvRow) {
-        if (csvRow == null || csvRow.size() < EXPECTED_FIELD_COUNT) {
+    public Article(String[] csvRow) {
+        if (csvRow == null || csvRow.length < EXPECTED_FIELD_COUNT) {
             throw new IllegalArgumentException("CSV row must contain " + EXPECTED_FIELD_COUNT + " fields for an Article.");
         }
 
         // Mapping: 0=uri, 1=date, 4=title, 5=body
-        this.uri = csvRow.get(0);
-        this.date = csvRow.get(1);
-        this.title = csvRow.get(4);
-        this.body = csvRow.get(5);
+        this.uri = csvRow[0];
+        this.date = csvRow[1];
+        this.title = csvRow[4];
+        this.body = csvRow[5];
 
         if (uri == null || uri.isBlank()) {
             throw new IllegalArgumentException("URI cannot be null or empty.");
