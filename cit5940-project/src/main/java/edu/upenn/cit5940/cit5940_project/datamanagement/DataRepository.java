@@ -5,7 +5,7 @@ import edu.upenn.cit5940.cit5940_project.common.dto.*;
 
 public class DataRepository {
 	
-	private Map<String, Article> searchMap;
+	private Map<String, Set<Article>> searchMap;
 	private Trie prefixTrie;
 	private ArticlesTreeMap articlesMap;
 	private Map<String, Integer> wordFrequencyMap; // values for monthlyWordMap, ties word to frequency
