@@ -1,11 +1,12 @@
 package edu.upenn.cit5940.cit5940_project.common.dto;
 
 import java.util.*;
+import java.time.LocalDate;
 
 public class Article {
 
     private String uri;
-    private String date;
+    private LocalDate date;
     private String title;
     private String body;
 
@@ -19,7 +20,7 @@ public class Article {
 
         // Mapping: 0=uri, 1=date, 4=title, 5=body
         this.uri = csvRow[0];
-        this.date = csvRow[1];
+        this.date = DateFormatter.formatDate(csvRow[1]);
         this.title = csvRow[4];
         this.body = csvRow[5];
 
@@ -34,7 +35,7 @@ public class Article {
     public String getUri() {
         return uri;
     }
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
     public String getTitle() {
@@ -52,7 +53,7 @@ public class Article {
     }
 
     public void setDate(String date) {
-        this.date = date;
+        this.date = DateFormatter.formatDate(date);
     }
     public void setTitle(String title) {
         this.title = title;

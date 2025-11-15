@@ -4,12 +4,18 @@ import edu.upenn.cit5940.cit5940_project.common.dto.*;
 
 public class TrieArticleAdder implements ArticleAdder<Trie> {
 	
+	private static final TrieArticleAdder INSTANCE = new TrieArticleAdder();
+	
+	private TrieArticleAdder() {};
+	
+	public static TrieArticleAdder getInstance() {
+		return INSTANCE;
+	}
+	
 	public void addArticle(Article article, Trie trie) {
 		
-		Tokenizer tokenizer = Tokenizer.getInstance();
-		
-		String[] titleTokens = tokenizer.tokenize(article.getTitle());
-		String[] bodyTokens = tokenizer.tokenize(article.getBody());
+		String[] titleTokens = Tokenizer.tokenize(article.getTitle());
+		String[] bodyTokens = Tokenizer.tokenize(article.getBody());
 		
 		addArticleHelper(titleTokens, trie);
 		addArticleHelper(bodyTokens, trie);

@@ -25,7 +25,7 @@ public class JsonFileArticleReader implements FileArticleReader {
 			
 			for (Article article : allArticles) {
 				if (article.getUri()== null || article.getUri().isBlank() ||
-					article.getDate() == null || article.getDate().isBlank() ||
+					article.getDate() == null ||
 					article.getTitle() == null || article.getTitle().isBlank() ||
 					article.getBody() == null) {
 						// call logger to log error
