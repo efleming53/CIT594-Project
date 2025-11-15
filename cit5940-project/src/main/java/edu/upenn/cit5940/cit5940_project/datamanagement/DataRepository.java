@@ -8,16 +8,18 @@ import edu.upenn.cit5940.cit5940_project.common.dto.*;
 public class DataRepository {
 	
 	private Set<String> articleTitleSet;
+	private Map<String, Article> articleIdMap;
 	private Map<String, Set<String>> searchMap;
 	private Trie prefixTrie;
-	private ArticlesTreeMap articlesMap;
+	private ArticlesTreeMap articlesTreeMap;
 	private Map<LocalDate, Map<String, Integer>> monthWordFrequencyMap; 
 	
 	private DataRepository() {
 		articleTitleSet = new HashSet<>();
+		articleIdMap = new HashMap<>();
 		searchMap = new HashMap<>();
 		prefixTrie = new Trie();
-		articlesMap = new ArticlesTreeMap();
+		articlesTreeMap = new ArticlesTreeMap();
 		monthWordFrequencyMap = new HashMap<>();
 		
 	}
@@ -38,15 +40,20 @@ public class DataRepository {
 		
 		for (Article article : articles) {
 			articleTitleSet.add(article.getTitle());
+			articleIdMap.put(article.getUri(), article);
 			searchMapAdder.addArticle(article, searchMap);
 			trieAdder.addArticle(article, prefixTrie);
-			treeMapAdder.addArticle(article, articlesMap);
+			treeMapAdder.addArticle(article, articlesTreeMap);
 			monthWordFreqAdder.addArticle(article, monthWordFrequencyMap);
 		}
 	}
 	
 	public Set<String> getArticleTitleSet(){
 		return new HashSet<>(articleTitleSet);
+	}
+	
+	public Map<String, Article> getArticleIdMap(){
+		return new HashMap<>(articleIdMap);
 	}
 	
 	public Map<String, Set<String>> getSearchMap(){
@@ -58,7 +65,7 @@ public class DataRepository {
 	}
 	
 	public ArticlesTreeMap getArticlesMap() {
-		return articlesMap;
+		return articlesTreeMap;
 	}
 	
 	public Map<LocalDate, Map<String, Integer>> getMonthWordFrequencyMap() {

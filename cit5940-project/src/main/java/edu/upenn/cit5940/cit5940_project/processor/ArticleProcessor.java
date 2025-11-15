@@ -10,11 +10,16 @@ public class ArticleProcessor {
 	
 	DataRepository dr = DataRepository.getDataRepository();
 	ArticlesTreeMap treemap = dr.getArticlesMap();
+	Map<String, Article> map = dr.getArticleIdMap();
 	
 	//TODO
-	public Article getArticleById(Article article) {
+	public Article getArticleById(String uri) {
 		
-		return article;
+		if (!map.containsKey(uri)) {
+			return null;
+		}
+		
+		return map.get(uri);
 	}
 	
 	public List<String> getArticleTitlesInPeriod(LocalDate start, LocalDate end) {
