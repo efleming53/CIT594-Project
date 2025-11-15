@@ -14,11 +14,6 @@ public class ArticleProcessor {
 	
 	//TODO
 	public Article getArticleById(String uri) {
-		
-		if (!map.containsKey(uri)) {
-			return null;
-		}
-		
 		return map.get(uri);
 	}
 	
