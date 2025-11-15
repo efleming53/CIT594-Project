@@ -34,8 +34,12 @@ public class TopicProcessor {
 				freqHeap.add(newPair);
 			}
 			
-			//TODO: validate size of heap
-			for (int i = 0; i < 10; i++) {
+			int k = 10;
+			if (freqHeap.size() < 10) {
+				k = freqHeap.size();
+			}
+			
+			for (int i = 0; i < k; i++) {
 				FreqPair pair = freqHeap.remove();
 				topTen.add(pair);
 			}			

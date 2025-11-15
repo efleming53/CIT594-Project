@@ -3,7 +3,7 @@ package edu.upenn.cit5940.cit5940_project.datamanagement;
 import java.util.*;
 import edu.upenn.cit5940.cit5940_project.common.dto.*;
 
-public class SearchMapArticleAdder implements ArticleAdder<Map<String, Set<Article>>> {
+public class SearchMapArticleAdder implements ArticleAdder<Map<String, Set<String>>> {
 	
 	private static final SearchMapArticleAdder INSTANCE = new SearchMapArticleAdder();
 	
@@ -13,7 +13,7 @@ public class SearchMapArticleAdder implements ArticleAdder<Map<String, Set<Artic
 		return INSTANCE;
 	}
 
-	public void addArticle(Article article, Map<String, Set<Article>> map) {
+	public void addArticle(Article article, Map<String, Set<String>> map) {
 		
 		String[] titleTokens = Tokenizer.tokenize(article.getTitle());
 		String[] bodyTokens = Tokenizer.tokenize(article.getBody());
@@ -23,7 +23,7 @@ public class SearchMapArticleAdder implements ArticleAdder<Map<String, Set<Artic
 		
 	}
 	
-	private static void addArticleHelper(String[] tokens, Article article, Map<String, Set<Article>> map) {
+	private static void addArticleHelper(String[] tokens, Article article, Map<String, Set<String>> map) {
 		
 		for (String token : tokens) {
 			
@@ -31,12 +31,13 @@ public class SearchMapArticleAdder implements ArticleAdder<Map<String, Set<Artic
 				continue;
 			}
 			
+			
 			if (map.containsKey(token)) {
-				Set<Article> keywordArticleSet = map.get(token);
-				keywordArticleSet.add(article);
+				Set<String> keywordArticleSet = map.get(token);
+				keywordArticleSet.add(article.getTitle());
 			} else {
-				Set<Article> newSet = new HashSet<>();
-				newSet.add(article);
+				Set<String> newSet = new HashSet<>();
+				newSet.add(article.getTitle());
 				map.put(token, newSet);
 			}
 			
