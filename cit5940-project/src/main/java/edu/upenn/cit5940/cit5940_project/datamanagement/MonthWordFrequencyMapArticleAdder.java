@@ -8,7 +8,7 @@ import edu.upenn.cit5940.cit5940_project.common.dto.Article;
 import edu.upenn.cit5940.cit5940_project.common.dto.StopWords;
 import edu.upenn.cit5940.cit5940_project.common.dto.Tokenizer;
 
-public class MonthWordFrequencyMapArticleAdder implements ArticleAdder<Map<String, Map<String, Integer>>> {
+public class MonthWordFrequencyMapArticleAdder implements ArticleAdder<Map<LocalDate, Map<String, Integer>>> {
 	
 	private static final MonthWordFrequencyMapArticleAdder INSTANCE = new MonthWordFrequencyMapArticleAdder();
 	
@@ -19,11 +19,9 @@ public class MonthWordFrequencyMapArticleAdder implements ArticleAdder<Map<Strin
 	}
 	
 	// adds words in given article to monthWordFrequencyMap
-	public void addArticle(Article article, Map<String, Map<String, Integer>> map) {
+	public void addArticle(Article article, Map<LocalDate, Map<String, Integer>> map) {
 		
-		// normalize article date to YYYY-MM
-		LocalDate rawDate = article.getDate();
-		String date = rawDate.format(DateTimeFormatter.ofPattern("yyyy-MM"));
+		LocalDate date = article.getDate();
 		
 		String[] titleTokens = Tokenizer.tokenize(article.getTitle());
 		String[] bodyTokens = Tokenizer.tokenize(article.getBody());
@@ -33,7 +31,7 @@ public class MonthWordFrequencyMapArticleAdder implements ArticleAdder<Map<Strin
 		
 	}
 	
-	private static void addArticleHelper(String[] tokens, String date, Map<String, Map<String, Integer>> map) {
+	private static void addArticleHelper(String[] tokens, LocalDate date, Map<LocalDate, Map<String, Integer>> map) {
 		
 		// if map doesnt have given date, make a new entry with date and empty map of word frequencies
 		if (!map.containsKey(date)) {
