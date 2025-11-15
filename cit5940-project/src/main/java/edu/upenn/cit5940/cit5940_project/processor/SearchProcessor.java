@@ -8,14 +8,14 @@ import edu.upenn.cit5940.cit5940_project.datamanagement.*;
 
 public class SearchProcessor {
 	
-
+	DataRepository dr = DataRepository.getDataRepository();
 	
 	public Set<String> articlesContainingAllKeywords(List<String> words){
 		
-		DataRepository dr = DataRepository.getDataRepository();
+
 		Map<String, Set<String>> map = dr.getSearchMap();
+		Set<String> titles = dr.getArticleTitleSet();
 		
-		Set<String> articleTitles = new HashSet<>();
 		
 		for (int i = 0; i < words.size(); i++) {
 			String word = words.get(i);
@@ -24,12 +24,31 @@ public class SearchProcessor {
 				continue;
 			}
 			
+			if (!map.containsKey(word)) {
+				return new HashSet<>();
+			}
 			
+			Set<String> wordTitles = map.get(word);
+			titles.retainAll(wordTitles);
+		}
+		return titles;
+	}
+	
+	//TODO: Make more efficient, trie traversal
+	public List<String> allWordsFromPrefix(String prefix){
+		
+		Trie trie = dr.getPrefixTrie();
+		List<String> allWords = trie.allWords();
+		List<String> prefixWords = new ArrayList<>();
+		
+		for (int i = 0; i < allWords.size(); i++) {
+			String word = allWords.get(i);
+			if (word.startsWith(prefix)) {
+				prefixWords.add(word);
+			}
 		}
 		
-		
-		return new HashSet<>();
-		
+		return prefixWords;
 	}
 
 }

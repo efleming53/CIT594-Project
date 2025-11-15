@@ -10,7 +10,7 @@ import edu.upenn.cit5940.cit5940_project.common.dto.*;
 public class CsvFileArticleReader implements FileArticleReader {
 
 	@Override
-	public List<Article> read(String filepath){
+	public void read(String filepath){
 		List<Article> articles = new ArrayList<>();
 		
 		try (CSVReader csvReader = new CSVReader(new FileReader(filepath));) {
@@ -37,6 +37,9 @@ public class CsvFileArticleReader implements FileArticleReader {
 			System.out.println("Error opening csv file, " + filepath + error.getMessage());
 
 		}
-		return articles;
+		
+		DataRepository dr = DataRepository.getDataRepository();
+		dr.loadArticles(articles);
+		return;
 	}
 }

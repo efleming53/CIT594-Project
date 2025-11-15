@@ -7,14 +7,14 @@ import edu.upenn.cit5940.cit5940_project.common.dto.*;
 
 public class DataRepository {
 	
-	private Set<Article> articleSet;
+	private Set<String> articleTitleSet;
 	private Map<String, Set<String>> searchMap;
 	private Trie prefixTrie;
 	private ArticlesTreeMap articlesMap;
 	private Map<LocalDate, Map<String, Integer>> monthWordFrequencyMap; 
 	
 	private DataRepository() {
-		articleSet = new HashSet<>();
+		articleTitleSet = new HashSet<>();
 		searchMap = new HashMap<>();
 		prefixTrie = new Trie();
 		articlesMap = new ArticlesTreeMap();
@@ -37,6 +37,7 @@ public class DataRepository {
 		MonthWordFrequencyMapArticleAdder monthWordFreqAdder = MonthWordFrequencyMapArticleAdder.getInstance();
 		
 		for (Article article : articles) {
+			articleTitleSet.add(article.getTitle());
 			searchMapAdder.addArticle(article, searchMap);
 			trieAdder.addArticle(article, prefixTrie);
 			treeMapAdder.addArticle(article, articlesMap);
@@ -44,8 +45,12 @@ public class DataRepository {
 		}
 	}
 	
+	public Set<String> getArticleTitleSet(){
+		return new HashSet<>(articleTitleSet);
+	}
+	
 	public Map<String, Set<String>> getSearchMap(){
-		return searchMap;
+		return new HashMap<>(searchMap);
 	}
 	
 	public Trie getPrefixTrie() {
