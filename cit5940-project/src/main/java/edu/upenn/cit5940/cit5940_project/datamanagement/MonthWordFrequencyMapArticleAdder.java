@@ -23,6 +23,8 @@ public class MonthWordFrequencyMapArticleAdder implements ArticleAdder<Map<Local
 		
 		LocalDate date = article.getDate();
 		
+		// need to change raw date in article to YYYY-MM??
+		
 		String[] titleTokens = Tokenizer.tokenize(article.getTitle());
 		String[] bodyTokens = Tokenizer.tokenize(article.getBody());
 		
