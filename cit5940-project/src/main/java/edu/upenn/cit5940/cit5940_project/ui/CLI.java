@@ -138,6 +138,20 @@ public class CLI {
 					continue;
 					
 				case "6":
+					System.out.println("Uri of article:\n");
+					input = scanner.nextLine().trim().toLowerCase();
+					Article article = ap.getArticleById(input);
+					
+					if (article == null) {
+						System.out.println("Article not found.\n");
+					}
+					
+					System.out.println("URI: " + article.getUri() +
+									   "Date: " + article.getDate() +
+									   "Title: " + article.getTitle() +
+									   "Body: " + article.getBody());
+					//logger
+					
 					continue;
 					
 				case "7":
