@@ -10,28 +10,30 @@ public class SearchProcessor {
 	
 	DataRepository dr = DataRepository.getDataRepository();
 	
-	public Set<String> articlesContainingAllKeywords(List<String> words){
+	public List<String> articlesContainingAllKeywords(String[] words){
 		
 
 		Map<String, Set<String>> map = dr.getSearchMap();
 		Set<String> titles = dr.getArticleTitleSet();
 		
 		
-		for (int i = 0; i < words.size(); i++) {
-			String word = words.get(i);
+		for (int i = 0; i < words.length; i++) {
+			String word = words[i];
 			
 			if (StopWords.WORDS.contains(word)) {
 				continue;
 			}
 			
 			if (!map.containsKey(word)) {
-				return new HashSet<>();
+				return new ArrayList<>();
 			}
 			
 			Set<String> wordTitles = map.get(word);
 			titles.retainAll(wordTitles);
 		}
-		return titles;
+		
+		List<String> titlesList = new ArrayList<>(titles);
+		return titlesList;
 	}
 	
 	//TODO: Make more efficient, trie traversal
