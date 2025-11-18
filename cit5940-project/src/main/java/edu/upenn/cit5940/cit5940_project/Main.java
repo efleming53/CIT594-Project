@@ -3,6 +3,9 @@ package edu.upenn.cit5940.cit5940_project;
 import java.io.IOException;
 
 import edu.upenn.cit5940.cit5940_project.datamanagement.*;
+import edu.upenn.cit5940.cit5940_project.processor.ArticleProcessor;
+import edu.upenn.cit5940.cit5940_project.processor.SearchProcessor;
+import edu.upenn.cit5940.cit5940_project.processor.TopicProcessor;
 import edu.upenn.cit5940.cit5940_project.ui.*;
 
 public class Main {
@@ -11,6 +14,12 @@ public class Main {
 		
 		FileArticleReader csvReader = new CsvFileArticleReader();
 		FileArticleReader jsonReader = new JsonFileArticleReader();
+		
+		DataRepository dr = DataRepository.getDataRepository();
+		
+		SearchProcessor sp = new SearchProcessor(dr);
+		TopicProcessor tp = new TopicProcessor(dr);
+		ArticleProcessor ap = new ArticleProcessor(dr);
 		
 		String dataFilePath = "articles.csv";
 		String logFilePath = "tech_news_search.log";
@@ -57,7 +66,7 @@ public class Main {
 				}
 			}
 		}
-		CLI cli = new CLI();
+		CLI cli = new CLI(sp, tp, ap);
 		cli.runCLI();
 	}
 

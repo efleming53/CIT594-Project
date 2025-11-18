@@ -4,13 +4,25 @@ import edu.upenn.cit5940.cit5940_project.processor.*;
 import edu.upenn.cit5940.cit5940_project.common.dto.*;
 
 import java.util.*;
+import java.time.YearMonth;
 
 public class CLI {
 	
+	private final Scanner scanner;
+	private final SearchProcessor sp;
+	private final TopicProcessor tp;
+	private final ArticleProcessor ap;
+	
+	public CLI(SearchProcessor sp, TopicProcessor tp, ArticleProcessor ap) {
+		this.scanner = new Scanner(System.in);
+		this.sp = sp;
+		this.tp = tp;
+		this.ap = ap;
+	}
+	
 
-	public static void runCLI() {
+	public void runCLI() {
 		
-		Scanner scanner = new Scanner(System.in);
 		
 		while (true) {
 			
@@ -48,17 +60,15 @@ public class CLI {
 		}
 	}
 	
-	private static void runInteractiveMode(Scanner scanner) {
+	private void runInteractiveMode(Scanner scanner) {
 		
 	}
 	
-	private static void runCommandMode(Scanner scanner) {
+	private void runCommandMode(Scanner scanner) {
 		
 		while (true) {
 			
-			SearchProcessor sp = new SearchProcessor();
-			TopicProcessor tp = new TopicProcessor();
-			ArticleProcessor ap = new ArticleProcessor();
+
 			
 			System.out.println("==============================="
 							 + "        COMMAND MODE           "
@@ -82,56 +92,19 @@ public class CLI {
 			switch(input) {
 			
 				case "1":
-
-					System.out.println("Words to search:\n");
-					input = scanner.nextLine();
-					String[] keywords = Tokenizer.tokenize(input);
-					List<String> titles = sp.articlesContainingAllKeywords(keywords);
-					
-					if (titles.isEmpty()) {
-						System.out.println("No articles found.\n");
-						continue;
-					}
-					
-					int i = 1;
-					
-					while (!titles.isEmpty()) {
-						String title = titles.remove(titles.size() - 1);
-						System.out.println(i + ". " + title);
-						i++;
-					}
-					
-					
-					//logger
+					runSearchCommand();
 					continue;
 					
 				case "2":
-					
-					System.out.println("Word to autocomplete:\n");
-					input = scanner.nextLine().trim().toLowerCase();
-					List<String> words = sp.allWordsFromPrefix(input);
-					
-					if (words.isEmpty()) {
-						System.out.println("No words found from prefix: " + input);
-						continue;
-					}
-					
-					System.out.println("Words matching prefix" + input + ":\n");
-					
-					for (int wordsIndex = 0; wordsIndex < 10 || wordsIndex < words.size(); wordsIndex++) {
-						System.out.println((wordsIndex + 1) + ". " + words.get(wordsIndex));
-					}
-					//logger
+					runAutocompleteCommand();
 					continue;
 					
 				case "3":
-					System.out.println("Enter month to get word freuencies. Must be in YYYY-MM format.\n"
-							+ "\n");
-					
-					
+					runTopicsCommand();
 					continue;
 					
 				case "4":
+					runTrendsCommand();
 					continue;
 					
 				case "5":
@@ -171,7 +144,89 @@ public class CLI {
 		
 	}
 	
-	private static void displayHelp() {
+	private void displayHelp() {
+		
+	}
+	
+	private void runSearchCommand() {
+		
+		while (true) {
+			System.out.println("Words to search:\n");
+			String input = scanner.nextLine();
+			String[] keywords = Tokenizer.tokenize(input);
+			List<String> titles = sp.articlesContainingAllKeywords(keywords);
+			
+			if (titles.isEmpty()) {
+				System.out.println("No articles found.\n");
+				continue;
+			}
+			
+			int i = 1;
+			
+			while (!titles.isEmpty()) {
+				String title = titles.remove(titles.size() - 1);
+				System.out.println(i + ". " + title);
+				i++;
+			}
+			
+			
+			//logger
+			return;
+		}
+	}
+	
+	private void runAutocompleteCommand() {
+		
+		System.out.println("Word to autocomplete:\n");
+		String input = scanner.nextLine().trim().toLowerCase();
+		List<String> words = sp.allWordsFromPrefix(input);
+		
+		if (words.isEmpty()) {
+			System.out.println("No words found from prefix: " + input);
+		}
+		
+		System.out.println("Words matching prefix" + input + ":\n");
+		
+		for (int wordsIndex = 0; wordsIndex < 10 || wordsIndex < words.size(); wordsIndex++) {
+			System.out.println((wordsIndex + 1) + ". " + words.get(wordsIndex));
+		}
+		
+	}
+	
+	private void runTopicsCommand() {
+		
+		while (true) {
+			
+			System.out.println("Enter month to get word frequencies. Must be in YYYY-MM format.\n"
+					+ "\n");
+			String input = scanner.nextLine().trim().toLowerCase();
+			YearMonth month = DateFormatter.formatYearMonth(input);
+			
+			if (month == null) {
+				System.out.println("Invalid date - must me in format YYYY-MM\n");
+				continue;
+			}
+			
+			List<FreqPair> topWords = tp.getTopTenTopicsOfMonth(month);
+			
+			if (topWords.isEmpty()) {
+				System.out.println("Month not found\n");
+				//logger
+				return;
+			}
+			
+			for (int i = 0; i < topWords.size(); i++) {
+				String word = topWords.get(i).getWord();
+				Integer frequency = topWords.get(i).getFrequency();
+				System.out.println((i + 1) + ". " + word + " - " + frequency + "\n");
+			}
+			//logger
+			return;
+			
+		}
+	}
+	
+	private void runTrendsCommand() {
 		
 	}
 }

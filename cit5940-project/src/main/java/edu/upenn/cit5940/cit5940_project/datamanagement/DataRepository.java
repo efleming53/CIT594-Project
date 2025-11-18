@@ -2,6 +2,7 @@ package edu.upenn.cit5940.cit5940_project.datamanagement;
 
 import java.util.*;
 import java.time.LocalDate;
+import java.time.YearMonth;
 
 import edu.upenn.cit5940.cit5940_project.common.dto.*;
 
@@ -12,7 +13,7 @@ public class DataRepository {
 	private Map<String, Set<String>> searchMap;
 	private Trie prefixTrie;
 	private ArticlesTreeMap articlesTreeMap;
-	private Map<LocalDate, Map<String, Integer>> monthWordFrequencyMap; 
+	private Map<YearMonth, Map<String, Integer>> monthWordFrequencyMap; 
 	
 	private DataRepository() {
 		articleTitleSet = new HashSet<>();
@@ -68,7 +69,7 @@ public class DataRepository {
 		return articlesTreeMap;
 	}
 	
-	public Map<LocalDate, Map<String, Integer>> getMonthWordFrequencyMap() {
+	public Map<YearMonth, Map<String, Integer>> getMonthWordFrequencyMap() {
 		return monthWordFrequencyMap;
 	}
 }

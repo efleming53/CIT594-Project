@@ -8,9 +8,15 @@ import edu.upenn.cit5940.cit5940_project.datamanagement.*;
 
 public class ArticleProcessor {
 	
-	DataRepository dr = DataRepository.getDataRepository();
-	ArticlesTreeMap treemap = dr.getArticlesMap();
-	Map<String, Article> map = dr.getArticleIdMap();
+	private final DataRepository dr;
+	private final ArticlesTreeMap treemap;
+	private final Map<String, Article> map;
+	
+	public ArticleProcessor(DataRepository dr) {
+		this.dr = dr;
+		this.treemap = dr.getArticlesMap();
+		this.map = dr.getArticleIdMap();
+	}
 	
 	//TODO
 	public Article getArticleById(String uri) {

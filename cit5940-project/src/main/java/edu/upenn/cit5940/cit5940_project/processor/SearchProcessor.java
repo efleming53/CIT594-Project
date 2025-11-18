@@ -8,7 +8,11 @@ import edu.upenn.cit5940.cit5940_project.datamanagement.*;
 
 public class SearchProcessor {
 	
-	DataRepository dr = DataRepository.getDataRepository();
+	private final DataRepository dr;
+	
+	public SearchProcessor(DataRepository dr) {
+		this.dr = dr;
+	}
 	
 	public List<String> articlesContainingAllKeywords(String[] words){
 		

@@ -6,27 +6,32 @@ import edu.upenn.cit5940.cit5940_project.datamanagement.DataRepository;
 import edu.upenn.cit5940.cit5940_project.common.dto.*;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class TopicProcessor {
+	
+	private final DataRepository dr;
+	
+	public TopicProcessor(DataRepository dr) {
+		this.dr = dr;
+	}
 
 
-		
-	public List<FreqPair> getTopTenTopicsOfMonth(String month){
+	// powers topics operation
+	public List<FreqPair> getTopTenTopicsOfMonth(YearMonth month){
 			
 		DataRepository dr = DataRepository.getDataRepository();
-		Map<LocalDate, Map<String, Integer>> map = dr.getMonthWordFrequencyMap();
+		Map<YearMonth, Map<String, Integer>> map = dr.getMonthWordFrequencyMap();
 			
 		List<FreqPair> topTen = new ArrayList<>();
 		PriorityQueue<FreqPair> freqHeap = new PriorityQueue<>(new FreqPairComparator());
 			
-		LocalDate date = parseDate(month);
-			
-		if (!map.containsKey(date)) {
+		if (!map.containsKey(month)) {
 				
 		} else {
-			Map<String, Integer> wordFreq = map.get(date);
+			Map<String, Integer> wordFreq = map.get(month);
 			Set<Map.Entry<String, Integer>> pairs = wordFreq.entrySet();
 				
 			for(Map.Entry<String, Integer> pair : pairs) {
@@ -51,12 +56,13 @@ public class TopicProcessor {
 	public List<Integer> getTopicFrequencyForMonthsInPeriod(String topic, String start, String end){
 		
 		DataRepository dr = DataRepository.getDataRepository();
-		Map<LocalDate, Map<String, Integer>> map = dr.getMonthWordFrequencyMap();
+		Map<YearMonth, Map<String, Integer>> map = dr.getMonthWordFrequencyMap();
 		
 		List<Integer> frequencies = new ArrayList<Integer>();
 		
-		LocalDate startMonth = parseDate(start);
-		LocalDate endMonth = parseDate(end);
+		YearMonth startMonth = DateFormatter.formatYearMonth(start);
+		YearMonth endMonth = DateFormatter.formatYearMonth(end);
+		
 		
 		if (startMonth == null || endMonth == null) {
 			//TODO: decide how to actuall handle error
@@ -70,7 +76,7 @@ public class TopicProcessor {
 			return null;
 		}
 		
-		LocalDate currMonth = startMonth;
+		YearMonth currMonth = startMonth;
 		
 		while (!currMonth.isAfter(endMonth)) {
 			

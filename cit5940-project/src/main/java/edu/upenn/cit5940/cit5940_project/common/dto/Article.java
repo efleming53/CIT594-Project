@@ -20,7 +20,7 @@ public class Article {
 
         // Mapping: 0=uri, 1=date, 4=title, 5=body
         this.uri = csvRow[0];
-        this.date = DateFormatter.formatDate(csvRow[1]);
+        this.date = DateFormatter.formatLocalDate(csvRow[1]);
         this.title = csvRow[4];
         this.body = csvRow[5];
 
@@ -53,7 +53,7 @@ public class Article {
     }
 
     public void setDate(String date) {
-        this.date = DateFormatter.formatDate(date);
+        this.date = DateFormatter.formatLocalDate(date);
     }
     public void setTitle(String title) {
         this.title = title;
