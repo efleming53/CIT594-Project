@@ -30,28 +30,28 @@ public class CLI {
 					+ "\n"
 					+ "1. Interactive Mode\n"
 					+ "2. Command Mode\n"
-					+ "3. Help"
+					+ "3. Help\n"
 					+ "4. Exit\n");
 			
 			String rawInput = scanner.nextLine();
 			String input = rawInput.trim().toLowerCase();
 			
-			if (input == "1") {
-				runInteractiveMode(scanner);
+			if (input.equals("1")) {
+				runInteractiveMode();
 				continue;				
 			}
 			
-			if (input == "2") {
-				runCommandMode(scanner);
+			if (input.equals("2")) {
+				runCommandMode();
 				continue;				
 			}
 			
-			if (input == "3") {
+			if (input.equals("3")) {
 				displayHelp();
 				continue;				
 			}
 					
-			if (input == "4") {
+			if (input.equals("4")) {
 				return;
 			}
 			
@@ -60,32 +60,32 @@ public class CLI {
 		}
 	}
 	
-	private void runInteractiveMode(Scanner scanner) {
+	private void runInteractiveMode() {
 		
 	}
 	
-	private void runCommandMode(Scanner scanner) {
+	private void runCommandMode() {
 		
 		while (true) {
 			
 
 			
-			System.out.println("==============================="
-							 + "        COMMAND MODE           "
-							 + "==============================="
-							 + ""
-							 + "Please select a command using 1-9"
-							 + ""
-							 + "1. Search"
-							 + "2. Autocomplete"
-							 + "3. Topics"
-							 + "4. Trends"
-							 + "5. Articles"
-							 + "6. Article"
-							 + "7. Stats"
-							 + "8. Help "
-							 + "9. Menu"
-							 + "");
+			System.out.println("===============================\n"
+							 + "        COMMAND MODE           \n"
+							 + "===============================\n"
+							 + "\n"
+							 + "Please select a command using 1-9\n"
+							 + "\n"
+							 + "1. Search\n"
+							 + "2. Autocomplete\n"
+							 + "3. Topics\n"
+							 + "4. Trends\n"
+							 + "5. Articles\n"
+							 + "6. Article\n"
+							 + "7. Stats\n"
+							 + "8. Help\n"
+							 + "9. Menu\n"
+							 + "\n");
 			
 			String input = scanner.nextLine();
 			
