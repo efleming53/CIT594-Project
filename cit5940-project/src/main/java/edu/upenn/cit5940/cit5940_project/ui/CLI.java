@@ -108,21 +108,11 @@ public class CLI {
 					continue;
 					
 				case "5":
+					runArticlesCommand();
 					continue;
 					
 				case "6":
-					System.out.println("Uri of article:\n");
-					input = scanner.nextLine().trim().toLowerCase();
-					Article article = ap.getArticleById(input);
-					
-					if (article == null) {
-						System.out.println("Article not found.\n");
-					}
-					
-					System.out.println("URI: " + article.getUri() +
-									   "Date: " + article.getDate() +
-									   "Title: " + article.getTitle() +
-									   "Body: " + article.getBody());
+					runArticleCommand();
 					//logger
 					
 					continue;
@@ -228,5 +218,60 @@ public class CLI {
 	
 	private void runTrendsCommand() {
 		
+		while (true) {
+			
+			System.out.println("Enter topic, start month, end month in format: topic YYYY-MM YYYY-MM");
+			String[] input = Tokenizer.tokenize(scanner.nextLine().toLowerCase());
+			//TODO handle invalid number of arguments, empty, invalid format
+			
+			List<Integer> frequencies = tp.getTopicFrequencyForMonthsInPeriod(input[0], input[1], input[2]);
+			
+			//TODO if frequencies null
+			
+			if (frequencies.isEmpty()) {
+				System.out.println("no frequencies found");
+				//logger
+				return;
+			}
+			
+			System.out.println("Frequencies for " + input[0] + " for " + input[1] + " - " + input[2] + ": \n");
+			
+			YearMonth month = DateFormatter.formatYearMonth(input[1]);
+			
+			for (int i = 0; i < frequencies.size(); i++, month = month.plusMonths(1)) {
+				Integer freq = frequencies.get(i);
+				System.out.println(month + ": " + freq + "\n");
+			}
+			//logger
+			return;
+		}
+		
+
+			
 	}
+	
+	private void runArticlesCommand() {
+		
+		while (true) {
+			
+		}
+	}
+	
+	private void runArticleCommand() {
+		
+		System.out.println("Uri of article:\n");
+		String input = scanner.nextLine().trim().toLowerCase();
+		Article article = ap.getArticleById(input);
+		
+		if (article == null) {
+			System.out.println("Article not found.\n");
+		}
+		
+		System.out.println("URI: " + article.getUri() +
+						   "Date: " + article.getDate() +
+						   "Title: " + article.getTitle() +
+						   "Body: " + article.getBody());
+	}
+		
 }
+
