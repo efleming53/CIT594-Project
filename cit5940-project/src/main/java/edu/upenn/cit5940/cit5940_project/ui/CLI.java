@@ -23,15 +23,25 @@ public class CLI {
 
 	public void runCLI() {
 		
-		
+		System.out.println("=== Tech News Search Engine ===\n"
+						 + "Initializing n-tier architecture...\n"
+						 + "Loading articles from filepath: " + "filepath\n"
+						 + "articles" + "aticles loaded\n"
+						 + "Architecture initialization complete.\n\n"); //TODO get filepath and number of articles loaded
+			
 		while (true) {
 			
-			System.out.println("Select option using 1-4\n"
+			System.out.println(
+					  "==================================================\n"
+					+ "                    MAIN MENU                     \n"
+					+ "==================================================\n"
 					+ "\n"
-					+ "1. Interactive Mode\n"
+					+ "1. Interactive Mode (Guided Menu)\n"
 					+ "2. Command Mode\n"
 					+ "3. Help\n"
-					+ "4. Exit\n");
+					+ "4. Exit\n"
+					+ "==================================================\n"
+					+ "Select option using 1-4\n");
 			
 			String rawInput = scanner.nextLine();
 			String input = rawInput.trim().toLowerCase();
@@ -52,6 +62,7 @@ public class CLI {
 			}
 					
 			if (input.equals("4")) {
+				programExit();
 				return;
 			}
 			
@@ -125,17 +136,50 @@ public class CLI {
 					
 				case "9":
 					return;
+				
+				default:
+					System.out.println("Invalid entry - Please enter a number choice using 1-9\n");
 			}
-			
-			
-			
-		System.out.println("Invalid entry - Please enter a number choice using 1-9\n");
 		}
 		
 	}
 	
 	private void displayHelp() {
 		
+		while (true) {
+			System.out.println("============================================================\n"
+							 + "                 HELP & DOCUMENTATION                       \n"
+							 + "============================================================\n"
+							 + "INTERACTIVE MODE:\n"
+							 + "     • Guided step-by-step interface\n "
+							 + "     • Prompts for all required inputs\n"
+							 + "     • Perfect for beginners\n"
+							 + "COMMAND MODE:\n"
+							 + "     • Direct command entry\n"
+							 + "     • Faster for experienced users\n "
+							 + "     • Type 'help' for command list\n "
+							 + "AVAILABLE SERVICES:\n "
+							 + "     1. Search Articles - Find articles by keywords\n "
+							 + "     2. Autocomplete - Get search suggestions\n"
+							 + "     3. Top Topics - View trending topics by period\n"
+							 + "     4. Topic Trends - Analyze topic popularity over time\n"
+							 + "     5. Browse Articles - Filter articles by date range\n"
+							 + "     6. View Article - Get detailed article information\n"
+							 + "     7. Statistics - View database statistics\n "
+							 + "DATE FORMATS:\n"
+							 + "     • Period: YYYY-MM (e.g., 2023-12)\n"
+							 + "     • Date: YYYY-MM-DD (e.g., 2023-12-01)\n"
+							 + "Press Enter to return to main menu...");
+			
+			String input = scanner.nextLine();
+			//TODO: require entter to return to main menu
+		}
+		
+	}
+	
+	private void programExit() {
+		System.out.println("Thank you for using Tech News Search Engine!\n"
+						 + "Goodbye!\n");
 	}
 	
 	private void runSearchCommand() {

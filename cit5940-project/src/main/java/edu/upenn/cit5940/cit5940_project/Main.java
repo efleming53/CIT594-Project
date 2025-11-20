@@ -3,6 +3,7 @@ package edu.upenn.cit5940.cit5940_project;
 import java.io.IOException;
 
 import edu.upenn.cit5940.cit5940_project.datamanagement.*;
+import edu.upenn.cit5940.cit5940_project.logging.Logger;
 import edu.upenn.cit5940.cit5940_project.processor.ArticleProcessor;
 import edu.upenn.cit5940.cit5940_project.processor.SearchProcessor;
 import edu.upenn.cit5940.cit5940_project.processor.TopicProcessor;
@@ -16,6 +17,7 @@ public class Main {
 		FileArticleReader jsonReader = new JsonFileArticleReader();
 		
 		DataRepository dr = DataRepository.getDataRepository();
+		Logger logger = Logger.getInstance();
 		
 		SearchProcessor sp = new SearchProcessor(dr);
 		TopicProcessor tp = new TopicProcessor(dr);
