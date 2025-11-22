@@ -13,8 +13,14 @@ import edu.upenn.cit5940.cit5940_project.common.dto.Article;
 
 public class JsonFileArticleReader implements FileArticleReader {
 	
+	String filepath;
+	
+	public JsonFileArticleReader(String filepath) {
+		this.filepath = filepath;
+	}
+	
 	@Override
-	public void read(String filepath) throws IOException{
+	public void read() throws IOException{
 		
 		List<Article> articles = new ArrayList<>();
 		ObjectMapper mapper = new ObjectMapper();
@@ -37,7 +43,7 @@ public class JsonFileArticleReader implements FileArticleReader {
 			//call logger
 		}
 		
-		DataRepository dr = DataRepository.getDataRepository();
+		DataRepository dr = DataRepository.getInstance();
 		dr.loadArticles(articles);
 		return;
 	}

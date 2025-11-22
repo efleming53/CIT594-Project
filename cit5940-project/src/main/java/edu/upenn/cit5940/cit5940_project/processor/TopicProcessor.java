@@ -22,7 +22,7 @@ public class TopicProcessor {
 	// powers topics operation
 	public List<FreqPair> getTopTenTopicsOfMonth(YearMonth month){
 			
-		DataRepository dr = DataRepository.getDataRepository();
+		DataRepository dr = DataRepository.getInstance();
 		Map<YearMonth, Map<String, Integer>> map = dr.getMonthWordFrequencyMap();
 			
 		List<FreqPair> topTen = new ArrayList<>();
@@ -53,32 +53,16 @@ public class TopicProcessor {
 	}
 	
 	// powers trends operation
-	public List<Integer> getTopicFrequencyForMonthsInPeriod(String topic, String start, String end){
+	public List<Integer> getTopicFrequencyForMonthsInPeriod(String topic, YearMonth start, YearMonth end){
 		
-		DataRepository dr = DataRepository.getDataRepository();
+		DataRepository dr = DataRepository.getInstance();
 		Map<YearMonth, Map<String, Integer>> map = dr.getMonthWordFrequencyMap();
 		
 		List<Integer> frequencies = new ArrayList<Integer>();
 		
-		YearMonth startMonth = DateFormatter.formatYearMonth(start);
-		YearMonth endMonth = DateFormatter.formatYearMonth(end);
+		YearMonth currMonth = start;
 		
-		
-		if (startMonth == null || endMonth == null) {
-			//TODO: decide how to actuall handle error
-			//logger
-			return null; 
-		}
-		
-		if (startMonth.isAfter(endMonth)){
-			//TODO: decide how to actuall handle error
-			//logger
-			return null;
-		}
-		
-		YearMonth currMonth = startMonth;
-		
-		while (!currMonth.isAfter(endMonth)) {
+		while (!currMonth.isAfter(end)) {
 			
 			if (!map.containsKey(currMonth)) {
 				frequencies.add(0);
@@ -98,7 +82,7 @@ public class TopicProcessor {
 			frequencies.add(frequency);
 			currMonth = currMonth.plusMonths(1);
 		}
-		
+		//logger
 		return frequencies;
 	}
 	

@@ -5,5 +5,5 @@ import edu.upenn.cit5940.cit5940_project.common.dto.*;
 import java.io.IOException;
 
 public interface FileArticleReader {
-	public void read(String filepath) throws IOException;
+	public void read() throws IOException;
 }

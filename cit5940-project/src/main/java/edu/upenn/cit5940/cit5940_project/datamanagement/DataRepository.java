@@ -27,7 +27,7 @@ public class DataRepository {
 	
 	private static DataRepository dataRepo = new DataRepository();
 	
-	public static DataRepository getDataRepository(){
+	public static DataRepository getInstance(){
 		return dataRepo;
 	}
 	

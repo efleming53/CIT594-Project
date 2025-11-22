@@ -13,10 +13,10 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		FileArticleReader csvReader = new CsvFileArticleReader();
-		FileArticleReader jsonReader = new JsonFileArticleReader();
+
+
 		
-		DataRepository dr = DataRepository.getDataRepository();
+		DataRepository dr = DataRepository.getInstance();
 		Logger logger = Logger.getInstance();
 		
 		SearchProcessor sp = new SearchProcessor(dr);
@@ -32,7 +32,8 @@ public class Main {
 			if (dataFilePath.endsWith(".csv")) {
 
 				try {
-					csvReader.read(dataFilePath);
+					FileArticleReader csvReader = new CsvFileArticleReader(dataFilePath);
+					csvReader.read();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -40,7 +41,8 @@ public class Main {
 			} else if (dataFilePath.endsWith(".json")) {
 
 				try {
-					jsonReader.read(dataFilePath);
+					FileArticleReader jsonReader = new JsonFileArticleReader(dataFilePath);
+					jsonReader.read();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -53,15 +55,17 @@ public class Main {
 			if (dataFilePath.endsWith(".csv")) {
 
 				try {
-					csvReader.read(dataFilePath);
+					FileArticleReader csvReader = new CsvFileArticleReader(dataFilePath);
+					csvReader.read();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			} else if (dataFilePath.endsWith(".json")) {
-
+				
 				try {
-					jsonReader.read(dataFilePath);
+					FileArticleReader jsonReader = new JsonFileArticleReader(dataFilePath);
+					jsonReader.read();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

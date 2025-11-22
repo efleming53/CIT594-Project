@@ -29,6 +29,7 @@ public class SearchProcessor {
 			}
 			
 			if (!map.containsKey(word)) {
+				//logger
 				return new ArrayList<>();
 			}
 			
@@ -37,6 +38,7 @@ public class SearchProcessor {
 		}
 		
 		List<String> titlesList = new ArrayList<>(titles);
+		//logger
 		return titlesList;
 	}
 	
@@ -53,7 +55,7 @@ public class SearchProcessor {
 				prefixWords.add(word);
 			}
 		}
-		
+		//logger
 		return prefixWords;
 	}
 

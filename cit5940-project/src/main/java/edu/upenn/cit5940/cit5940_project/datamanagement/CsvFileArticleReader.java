@@ -8,9 +8,15 @@ import com.opencsv.exceptions.CsvValidationException;
 import edu.upenn.cit5940.cit5940_project.common.dto.*;
 
 public class CsvFileArticleReader implements FileArticleReader {
+	
+	String filepath;
+	
+	public CsvFileArticleReader(String filepath) {
+		this.filepath = filepath;
+	}
 
 	@Override
-	public void read(String filepath){
+	public void read(){
 		List<Article> articles = new ArrayList<>();
 		
 		try (CSVReader csvReader = new CSVReader(new FileReader(filepath));) {
@@ -38,7 +44,7 @@ public class CsvFileArticleReader implements FileArticleReader {
 
 		}
 		
-		DataRepository dr = DataRepository.getDataRepository();
+		DataRepository dr = DataRepository.getInstance();
 		dr.loadArticles(articles);
 		return;
 	}

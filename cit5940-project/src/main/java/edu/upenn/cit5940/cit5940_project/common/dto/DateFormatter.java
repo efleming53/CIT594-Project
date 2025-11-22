@@ -20,9 +20,18 @@ public final class DateFormatter {
 		}
 	}
 	
-    public static YearMonth formatYearMonth(String date) {
+    public static YearMonth formatPeriod(String date) {
         try {
-            return YearMonth.parse(date, DateTimeFormatter.ofPattern("M/d/yyyy"));
+            return YearMonth.parse(date, DateTimeFormatter.ofPattern("yyyy-MM"));
+        } catch (DateTimeParseException e) {
+            // log error
+            return null;
+        }
+    }
+    
+    public static LocalDate formatDate(String date) {
+        try {
+            return LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         } catch (DateTimeParseException e) {
             // log error
             return null;

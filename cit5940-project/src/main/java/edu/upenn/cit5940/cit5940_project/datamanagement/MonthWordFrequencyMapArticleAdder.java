@@ -37,7 +37,7 @@ public class MonthWordFrequencyMapArticleAdder implements ArticleAdder<Map<YearM
 	
 	private static void addArticleHelper(String[] tokens, String rawDate, Map<YearMonth, Map<String, Integer>> map) {
 		
-		YearMonth date = DateFormatter.formatYearMonth(rawDate);
+		YearMonth date = DateFormatter.formatPeriod(rawDate);
 		
 		// if map doesnt have given date, make a new entry with date and empty map of word frequencies
 		if (!map.containsKey(date)) {

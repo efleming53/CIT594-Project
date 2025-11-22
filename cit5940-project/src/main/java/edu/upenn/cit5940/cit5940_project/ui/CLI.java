@@ -5,6 +5,7 @@ import edu.upenn.cit5940.cit5940_project.common.dto.*;
 
 import java.util.*;
 import java.time.YearMonth;
+import java.time.LocalDate;
 
 public class CLI {
 	
@@ -72,7 +73,179 @@ public class CLI {
 	}
 	
 	private void runInteractiveMode() {
+		while (true) {
+			System.out.println("==================================================\n"
+					         + "                INTERACTIVE MODE                  \n"
+					         + "==================================================\n"
+					         + "\n"
+					         + " This mode will guide you through each operation step by step.\n"
+					         + "----------------------------------------\n"
+					         + "                AVAILABLE SERVICES      \n"
+					         + "----------------------------------------\n "
+					         + "1. Search Articles\n "
+					         + "2. Get Autocomplete Suggestions\n "
+					         + "3. View Top Topics\n "
+					         + "4. Analyze Topic Trends\n "
+					         + "5. Browse Articles by Date\n "
+					         + "6. View Specific Article by ID\n "
+					         + "7. Show Statistics\n "
+					         + "8. Back to Main Menu\n "
+					         + "----------------------------------------\n "
+					         + "Select a service (1-8):\n");
+			
+			String input = scanner.nextLine().trim();
+			
+			if (input.isEmpty()) {
+				System.out.println("Invalid choice - please enter 1-8\n");
+				//logger
+				continue;
+			}
+			
+			switch(input) {
+			
+				case "1":
+					//logger
+					String[] keywords = validateKeywords();
+					runSearchCommand(keywords);
+					break;
+					
+				case "2":
+					//logger
+					String prefix = validateWord();
+					runAutocompleteCommand(prefix);
+					break;
+					
+				case "3":
+					//logger
+					YearMonth period = validatePeriod();
+					runTopicsCommand(period);
+					break;
+				
+				case "4":
+					//logger
+					String topic = validateWord();
+					YearMonth startPeriod = validatePeriod();
+					YearMonth endPeriod = validatePeriod();
+					if (startPeriod.isAfter(endPeriod)) {
+						//logger
+						System.out.println("Invalid choice - start period must not come after end period\n");
+						continue;
+					}
+					runTrendsCommand(topic, startPeriod, endPeriod);
+					break;
+				
+				case "5":
+					//logger
+					LocalDate startDate = validateDate();
+					LocalDate endDate = validateDate();
+					if (startDate.isAfter(endDate)) {
+						//logger
+						System.out.println("Invalid choice - start date must not come after end date\n");
+						continue;
+					}
+					runArticlesCommand(startDate, endDate);
+					break;
+				
+				case "6":
+					//logger
+					String uri = validateWord();
+					runArticleCommand(uri);
+					break;
+					
+				case "7":
+					//logger
+					runStatsCommand();
+					break;
+					
+				case "8":
+					//logger
+					return;
+					
+				default:
+					//logger
+					System.out.println("Invalid choice, please enter 1-8");
+			}
+				
+			
+		}
+	}
+	
+	private String[] validateKeywords() {
 		
+		while (true) {
+			System.out.println("Please enter keywords to search for separated by a space:\n");
+			String input = scanner.nextLine();
+			String[] keywords = Tokenizer.tokenize(input);
+			
+			if (keywords.length == 0) {
+				//logger
+				System.out.println("Please enter a choice.\n");
+				continue;
+			}		
+			return keywords;	
+		}
+
+	}
+	
+	private String validateWord() {
+		
+		while (true) {
+			System.out.println("Please enter a valid word as input:\n");
+			String input = scanner.nextLine().trim();
+			
+			if (input.isEmpty()) {
+				//logger
+				System.out.println("Please enter a choice.\n");
+				continue;		
+			}
+			
+			return input;
+		}
+	}
+	private YearMonth validatePeriod() {
+		
+		while (true) {
+			System.out.println("Please enter period in format YYYY-MM:\n");
+			String input = scanner.nextLine().trim();
+			
+			if (input.isEmpty()) {
+				//logger
+				System.out.println("Please enter a choice.\n");
+				continue;
+			}
+			
+			YearMonth period = DateFormatter.formatPeriod(input);
+			if (period == null) {
+				//logger
+				System.out.println("Invalid period - please enter period in format YYYY-MM\n");
+				continue;
+			}
+			
+			return period;
+		}
+	}
+	
+	private LocalDate validateDate() {
+		
+		while (true) {
+			System.out.println("Please enter date in format YYYY-MM-DD:\n");
+			String input = scanner.nextLine().trim();
+			
+			if (input.isEmpty()) {
+				//logger
+				System.out.println("Please enter a choice.\n");
+				continue;
+			}
+			
+			LocalDate date = DateFormatter.formatDate(input);
+			if (date == null) {
+				//logger
+				System.out.println("Invalid date - please enter date in format YYYY-MM-DD\n");
+				continue;
+			}
+			
+			return date;
+		}
 	}
 	
 	private void runCommandMode() {
@@ -98,43 +271,133 @@ public class CLI {
 							 + "9. Menu\n"
 							 + "\n");
 			
-			String input = scanner.nextLine();
+			String[] input = Tokenizer.tokenize(scanner.nextLine());
 			
-			switch(input) {
+			if (input[0].isEmpty()) {
+				System.out.println("Invalid input - pleaser enter a command\n");
+				//logger
+				continue;
+			}
 			
-				case "1":
-					runSearchCommand();
-					continue;
-					
-				case "2":
-					runAutocompleteCommand();
-					continue;
-					
-				case "3":
-					runTopicsCommand();
-					continue;
-					
-				case "4":
-					runTrendsCommand();
-					continue;
-					
-				case "5":
-					runArticlesCommand();
-					continue;
-					
-				case "6":
-					runArticleCommand();
+			switch(input[0]) {
+			
+				case "search":
 					//logger
+					String[] keywords = Arrays.copyOfRange(input, 1, input.length);
+					runSearchCommand(keywords);
+					break;
 					
-					continue;
+				case "autocomplete":
+					//logger
+					if (input.length == 1) {
+						System.out.println("Please provide a prefix for autocomplete command\n");
+						//logger
+						continue;
+					}
+					//TODO if input.length > 2?
+					runAutocompleteCommand(input[1]);
+					break;
 					
-				case "7":
-					continue;
+				case "topics":
+					//logger
+					if (input.length == 1) {
+						System.out.println("Please provide a period for topics commmand in the format YYYY-MM");
+						//logger
+						continue;
+					}
+					YearMonth period = DateFormatter.formatPeriod(input[1]);
+					if (period == null) {
+						System.out.println("Please enter a valid period in the format YYYY-MM\n");
+						//logger
+						continue;
+					}
+					runTopicsCommand(period);
+					break;
 					
-				case "8":
-					continue;
+				case "trends":
+					//logger
+					if (input.length != 4) {
+						System.out.println("Invalid number of arguments - Please enter 'trends' <topic> <start (YYYY-MM)> <end (YYYY-MM)>\n");
+						//logger
+						continue;
+					}
 					
-				case "9":
+					YearMonth startPeriod = DateFormatter.formatPeriod(input[2]);
+					if (startPeriod == null) {
+						System.out.println("Invalid input - start period must be in format YYYY-MM\n");
+						//logger
+						continue;
+					}
+					
+					YearMonth endPeriod = DateFormatter.formatPeriod(input[3]);
+					if (endPeriod == null) {
+						System.out.println("Invalid input - start period must be in format YYYY-MM\n");
+						//logger
+						continue;
+					}
+					
+					if (startPeriod.isAfter(endPeriod)) {
+						System.out.println("Invalid input - start period cannot be after end period\n");
+						//logger
+						continue;
+					}
+					
+					runTrendsCommand(input[1], startPeriod, endPeriod);	
+					break;
+					
+				case "articles":
+					//logger
+					if (input.length != 3) {
+						System.out.println("Invalid number of arguments - please enter 'articles' <start date (YYYY-MM-DD)> <end date (YYYY-MM-DD)>\n");
+						//logger
+						continue;
+					}
+					
+					LocalDate startDate = DateFormatter.formatDate(input[1]);
+					if (startDate == null) {
+						System.out.println("Invalid input - please enter start date in format YYYY-MM-DD");
+						//logger
+						continue;
+					}
+					
+					LocalDate endDate = DateFormatter.formatDate(input[2]);
+					if (endDate == null) {
+						System.out.println("Invalid input - please enter end date in format YYYY-MM-DD");
+						//logger
+						continue;
+					}
+					
+					if (startDate.isAfter(endDate)) {
+						System.out.println("Invalid input - start date must not be after end date");
+						//logger
+						continue;
+					}
+					
+					runArticlesCommand(startDate, endDate);
+					break;
+					
+				case "article":
+					//logger
+					if (input.length != 2) {
+						System.out.println("Invalid number of inputs - please enter 'article' <uri>");
+						//logger
+						continue;
+					}
+					
+					runArticleCommand(input[1]);
+					break;
+					
+				case "stats":
+					//logger
+					runStatsCommand();
+					break;
+					
+				case "help":
+					//logger
+					displayHelp();
+					break;
+					
+				case "menu":
 					return;
 				
 				default:
@@ -172,7 +435,12 @@ public class CLI {
 							 + "Press Enter to return to main menu...");
 			
 			String input = scanner.nextLine();
-			//TODO: require entter to return to main menu
+			//TODO: require enter to return to main menu
+			if (input.trim().isEmpty()) {
+				return;
+			}
+			//logger
+			System.out.println("Invalid input - please press Enter to return to main menu\n");
 		}
 		
 	}
@@ -182,17 +450,14 @@ public class CLI {
 						 + "Goodbye!\n");
 	}
 	
-	private void runSearchCommand() {
+	
+	private void runSearchCommand(String[] keywords) {
 		
-		while (true) {
-			System.out.println("Words to search:\n");
-			String input = scanner.nextLine();
-			String[] keywords = Tokenizer.tokenize(input);
 			List<String> titles = sp.articlesContainingAllKeywords(keywords);
 			
 			if (titles.isEmpty()) {
 				System.out.println("No articles found.\n");
-				continue;
+				return;
 			}
 			
 			int i = 1;
@@ -202,119 +467,110 @@ public class CLI {
 				System.out.println(i + ". " + title);
 				i++;
 			}
-			
-			
-			//logger
 			return;
 		}
-	}
 	
-	private void runAutocompleteCommand() {
+	
+	private void runAutocompleteCommand(String prefix) {
 		
-		System.out.println("Word to autocomplete:\n");
-		String input = scanner.nextLine().trim().toLowerCase();
-		List<String> words = sp.allWordsFromPrefix(input);
+
+		List<String> words = sp.allWordsFromPrefix(prefix);
 		
 		if (words.isEmpty()) {
-			System.out.println("No words found from prefix: " + input);
+			System.out.println("No words found from prefix: " + prefix);
 		}
 		
-		System.out.println("Words matching prefix" + input + ":\n");
+		System.out.println("Words matching prefix" + prefix + ":\n");
 		
-		for (int wordsIndex = 0; wordsIndex < 10 || wordsIndex < words.size(); wordsIndex++) {
+		for (int wordsIndex = 0; wordsIndex < 10 && wordsIndex < words.size(); wordsIndex++) {
 			System.out.println((wordsIndex + 1) + ". " + words.get(wordsIndex));
 		}
 		
 	}
 	
-	private void runTopicsCommand() {
+	private void runTopicsCommand(YearMonth period) {
 		
-		while (true) {
-			
-			System.out.println("Enter month to get word frequencies. Must be in YYYY-MM format.\n"
-					+ "\n");
-			String input = scanner.nextLine().trim().toLowerCase();
-			YearMonth month = DateFormatter.formatYearMonth(input);
-			
-			if (month == null) {
-				System.out.println("Invalid date - must me in format YYYY-MM\n");
-				continue;
-			}
-			
-			List<FreqPair> topWords = tp.getTopTenTopicsOfMonth(month);
-			
-			if (topWords.isEmpty()) {
-				System.out.println("Month not found\n");
-				//logger
-				return;
-			}
-			
-			for (int i = 0; i < topWords.size(); i++) {
-				String word = topWords.get(i).getWord();
-				Integer frequency = topWords.get(i).getFrequency();
-				System.out.println((i + 1) + ". " + word + " - " + frequency + "\n");
-			}
-			//logger
-			return;
-			
-		}
-	}
-	
-	private void runTrendsCommand() {
 		
-		while (true) {
 			
-			System.out.println("Enter topic, start month, end month in format: topic YYYY-MM YYYY-MM");
-			String[] input = Tokenizer.tokenize(scanner.nextLine().toLowerCase());
-			//TODO handle invalid number of arguments, empty, invalid format
+		List<FreqPair> topWords = tp.getTopTenTopicsOfMonth(period);
 			
-			List<Integer> frequencies = tp.getTopicFrequencyForMonthsInPeriod(input[0], input[1], input[2]);
-			
-			//TODO if frequencies null
-			
-			if (frequencies.isEmpty()) {
-				System.out.println("no frequencies found");
-				//logger
-				return;
-			}
-			
-			System.out.println("Frequencies for " + input[0] + " for " + input[1] + " - " + input[2] + ": \n");
-			
-			YearMonth month = DateFormatter.formatYearMonth(input[1]);
-			
-			for (int i = 0; i < frequencies.size(); i++, month = month.plusMonths(1)) {
-				Integer freq = frequencies.get(i);
-				System.out.println(month + ": " + freq + "\n");
-			}
+		if (topWords.isEmpty()) {
+			System.out.println("Month not found\n");
 			//logger
 			return;
 		}
-		
-
 			
-	}
-	
-	private void runArticlesCommand() {
-		
-		while (true) {
-			
+		for (int i = 0; i < topWords.size(); i++) {
+			String word = topWords.get(i).getWord();
+			Integer frequency = topWords.get(i).getFrequency();
+			System.out.println((i + 1) + ". " + word + " - " + frequency + "\n");
 		}
+		return;		
 	}
 	
-	private void runArticleCommand() {
+	private void runTrendsCommand(String topic, YearMonth start, YearMonth end) {
 		
-		System.out.println("Uri of article:\n");
-		String input = scanner.nextLine().trim().toLowerCase();
-		Article article = ap.getArticleById(input);
+		
+			
+		List<Integer> frequencies = tp.getTopicFrequencyForMonthsInPeriod(topic, start, end);
+			
+			
+		if (frequencies.isEmpty()) {
+			System.out.println("no frequencies found");
+			return;
+		}
+			
+		System.out.println("Frequencies for " + topic + " for " + start + " - " + end + ": \n");
+			
+		YearMonth month = start;
+			
+		for (int i = 0; i < frequencies.size(); i++, month = month.plusMonths(1)) {
+			Integer freq = frequencies.get(i);
+			System.out.println(month + ": " + freq + "\n");
+		}
+		return;
+	}
+	
+	private void runArticlesCommand(LocalDate start, LocalDate end) {
+		
+		
+		Set<String> titlesSet = ap.getArticleTitlesInPeriod(start, end);
+			
+		if (titlesSet.isEmpty()) {
+			System.out.println("No titles found between dates " + start + " - " + end + ".\n");
+			return;
+		}
+			
+		System.out.println("Titles found between dates " + start + " - " + end + ":\n");
+			
+		List<String> titles = new ArrayList<>(titlesSet);
+			
+		while (!titles.isEmpty()) {
+			String title = titles.remove(titles.size() - 1);
+			System.out.println(title + "\n");
+		}
+		return;	
+	}
+	
+	private void runArticleCommand(String uri) {
+		
+		Article article = ap.getArticleById(uri);
 		
 		if (article == null) {
 			System.out.println("Article not found.\n");
 		}
 		
-		System.out.println("URI: " + article.getUri() +
-						   "Date: " + article.getDate() +
-						   "Title: " + article.getTitle() +
-						   "Body: " + article.getBody());
+		System.out.println("URI: " + article.getUri() + "\n" +
+						   "Date: " + article.getDate() + "\n" +
+						   "Title: " + article.getTitle() + "\n" +
+						   "Body: " + article.getBody() + "\n" );
+	}
+	
+	private void runStatsCommand() {
+		Integer numArticles = ap.getNumberOfArticles();
+		System.out.println("Stats:\n"
+						 + "\n"
+						 + "Number of Articles: " + numArticles + "\n");
 	}
 		
 }
