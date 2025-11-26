@@ -8,12 +8,15 @@ import java.util.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.upenn.cit5940.cit5940_project.common.dto.Article;
-
+import edu.upenn.cit5940.cit5940_project.logging.Logger;
+import edu.upenn.cit5940.cit5940_project.logging.Logger.LogType;
 import edu.upenn.cit5940.cit5940_project.common.dto.Article;
 
 public class JsonFileArticleReader implements FileArticleReader {
 	
 	String filepath;
+	Integer articleNum = 1;
+	Logger logger = Logger.getInstance();
 	
 	public JsonFileArticleReader(String filepath) {
 		this.filepath = filepath;
@@ -30,20 +33,24 @@ public class JsonFileArticleReader implements FileArticleReader {
 			List<Article> allArticles = mapper.readValue(jsonData, new TypeReference<List<Article>>() {});
 			
 			for (Article article : allArticles) {
+				//validate article
 				if (article.getUri()== null || article.getUri().isBlank() ||
 					article.getDate() == null ||
 					article.getTitle() == null || article.getTitle().isBlank() ||
 					article.getBody() == null) {
-						// call logger to log error
+						logger.log(LogType.WARNING, "Error parsing record number " + articleNum);
+						articleNum++;
 						continue;
 					}
 				articles.add(article);
 			}
 		} catch (IOException error) {
-			//call logger
+			logger.log(LogType.ERROR, "Error opening JSON file: " + filepath);
+			return;
 		}
 		
 		DataRepository dr = DataRepository.getInstance();
+		//load articles into the DataRepository
 		dr.loadArticles(articles);
 		return;
 	}

@@ -12,7 +12,8 @@ public class Logger {
 	
 	public enum LogType{
 		INFO,
-		ERROR
+		ERROR,
+		WARNING
 	}
 	
 	private Logger() {}
@@ -39,10 +40,10 @@ public class Logger {
 		logFilePath = filepath;
 	}
 	
-	private void log(LogType type, String context) {
+	public void log(LogType type, String context) {
 		
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFilePath, true))){
-			writer.write(LocalDateTime.now() + " " + type + "" + context);
+			writer.write(LocalDateTime.now() + " " + type + " " + context);
 			writer.newLine();
 		} catch (IOException e) {
 			//TODO catch error

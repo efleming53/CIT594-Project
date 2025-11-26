@@ -490,8 +490,6 @@ public class CLI {
 	
 	private void runTopicsCommand(YearMonth period) {
 		
-		
-			
 		List<FreqPair> topWords = tp.getTopTenTopicsOfMonth(period);
 			
 		if (topWords.isEmpty()) {
@@ -509,8 +507,6 @@ public class CLI {
 	}
 	
 	private void runTrendsCommand(String topic, YearMonth start, YearMonth end) {
-		
-		
 			
 		List<Integer> frequencies = tp.getTopicFrequencyForMonthsInPeriod(topic, start, end);
 			
@@ -571,7 +567,6 @@ public class CLI {
 		System.out.println("Stats:\n"
 						 + "\n"
 						 + "Number of Articles: " + numArticles + "\n");
-	}
-		
+	}	
 }
 

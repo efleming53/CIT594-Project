@@ -6,9 +6,13 @@ import java.io.IOException;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import edu.upenn.cit5940.cit5940_project.common.dto.*;
+import edu.upenn.cit5940.cit5940_project.logging.Logger;
+import edu.upenn.cit5940.cit5940_project.logging.Logger.LogType;
 
 public class CsvFileArticleReader implements FileArticleReader {
 	
+	Logger logger = Logger.getInstance();
+	Integer recordNum = 1;
 	String filepath;
 	
 	public CsvFileArticleReader(String filepath) {
@@ -32,19 +36,22 @@ public class CsvFileArticleReader implements FileArticleReader {
 					record[4] == null ||
 					record[4].isBlank() ||
 					record[5] == null) {
-					// call logger to log error
+					logger.log(LogType.WARNING, "Error parsing record number " + recordNum);
+					recordNum++;
 					continue;
 				}
 				articles.add(new Article(record));
+				recordNum++;
 			}
 			
 		// switch to calling logger to log warning		
 		} catch (IOException | CsvValidationException error) {
-			System.out.println("Error opening csv file, " + filepath + error.getMessage());
-
+			logger.log(LogType.ERROR, "Error opening CSV file: " + filepath);
+			return;
 		}
 		
 		DataRepository dr = DataRepository.getInstance();
+		//load articles into the DataRepository
 		dr.loadArticles(articles);
 		return;
 	}
