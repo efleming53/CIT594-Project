@@ -55,15 +55,15 @@ public class DataRepository {
 	}
 	
 	public Set<String> getArticleTitleSet(){
-		return new HashSet<>(articleTitleSet);
+		return articleTitleSet;
 	}
 	
 	public Map<String, Article> getArticleIdMap(){
-		return new HashMap<>(articleIdMap);
+		return articleIdMap;
 	}
 	
 	public Map<String, Set<String>> getSearchMap(){
-		return new HashMap<>(searchMap);
+		return searchMap;
 	}
 	
 	public Trie getPrefixTrie() {

@@ -79,6 +79,7 @@ public class Main {
 					jsonReader.read();
 				} catch (IOException e) {
 					dataFilePathNotFound(logger, dataFilePath);
+					return;
 				}
 			}
 		}
@@ -98,7 +99,7 @@ public class Main {
 	private static void dataFilePathNotFound(Logger logger, String dataFilePath) {
 		logger.log(LogType.ERROR, "Error - file with path not found: " + dataFilePath);
 		System.out.println("Error - file not found: " + dataFilePath + "\n"
-						 + "Thank you for using Tech News Search Engine!/n"
+						 + "Thank you for using Tech News Search Engine!\n"
 						 + "Goodbye!\n");
 	}
 	
