@@ -2,8 +2,8 @@ package edu.upenn.cit5940.cit5940_project.processor;
 
 import java.util.*;
 
-import edu.upenn.cit5940.cit5940_project.datamanagement.DataRepository;
 import edu.upenn.cit5940.cit5940_project.common.dto.*;
+import edu.upenn.cit5940.cit5940_project.datamanagement.DataRepository;
 
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -22,7 +22,6 @@ public class TopicProcessor {
 	// powers topics operation
 	public List<FreqPair> getTopTenTopicsOfMonth(YearMonth month){
 			
-		DataRepository dr = DataRepository.getInstance();
 		Map<YearMonth, Map<String, Integer>> map = dr.getMonthWordFrequencyMap();
 			
 		List<FreqPair> topTen = new ArrayList<>();
@@ -39,11 +38,13 @@ public class TopicProcessor {
 				freqHeap.add(newPair);
 			}
 			
+			//set loop condition to remove top k items. 10 if # of words > 10, set k to # of words if < 10
 			int k = 10;
 			if (freqHeap.size() < 10) {
 				k = freqHeap.size();
 			}
 			
+			// while i < value we set remove top k items from max heap and add to list we will return
 			for (int i = 0; i < k; i++) {
 				FreqPair pair = freqHeap.remove();
 				topTen.add(pair);
@@ -54,8 +55,7 @@ public class TopicProcessor {
 	
 	// powers trends operation
 	public List<Integer> getTopicFrequencyForMonthsInPeriod(String topic, YearMonth start, YearMonth end){
-		
-		DataRepository dr = DataRepository.getInstance();
+	
 		Map<YearMonth, Map<String, Integer>> map = dr.getMonthWordFrequencyMap();
 		
 		List<Integer> frequencies = new ArrayList<Integer>();

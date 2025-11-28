@@ -12,6 +12,9 @@ import edu.upenn.cit5940.cit5940_project.ui.*;
 
 public class Main {
 	
+	static String dataFilePath = "articles.csv";
+	static String logFilePath = "tech_news_search.log";
+	
 	public static void main(String[] args) {
 		
 		Logger logger = Logger.getInstance();
@@ -21,8 +24,7 @@ public class Main {
 		TopicProcessor tp = new TopicProcessor(dr);
 		ArticleProcessor ap = new ArticleProcessor(dr);
 		
-		String dataFilePath = "articles.csv";
-		String logFilePath = "tech_news_search.log";
+
 		
 		//2 args means optional dataFilePath provided
 		if (args.length == 2) {
@@ -83,6 +85,7 @@ public class Main {
 		//run cli to begin user program
 		CLI cli = new CLI(sp, tp, ap);
 		cli.runCLI();
+		logger.log(LogType.INFO, "Program ended by user");
 		return;
 	}
 	
@@ -97,6 +100,10 @@ public class Main {
 		System.out.println("Error - file not found: " + dataFilePath + "\n"
 						 + "Thank you for using Tech News Search Engine!/n"
 						 + "Goodbye!\n");
+	}
+	
+	public static String getDataFilePath() {
+		return dataFilePath;
 	}
 
 }

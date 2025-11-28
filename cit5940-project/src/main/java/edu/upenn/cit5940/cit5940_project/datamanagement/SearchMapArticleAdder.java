@@ -1,7 +1,9 @@
 package edu.upenn.cit5940.cit5940_project.datamanagement;
 
 import java.util.*;
+
 import edu.upenn.cit5940.cit5940_project.common.dto.*;
+
 
 public class SearchMapArticleAdder implements ArticleAdder<Map<String, Set<String>>> {
 	
@@ -27,14 +29,17 @@ public class SearchMapArticleAdder implements ArticleAdder<Map<String, Set<Strin
 		
 		for (String token : tokens) {
 			
+			//if word is a Stopword, skip it so it is not in the map
 			if (StopWords.WORDS.contains(token)){
 				continue;
 			}
 			
-			
+			// if word is already in the map, get its set of titles and add articles title to the set
 			if (map.containsKey(token)) {
 				Set<String> keywordArticleSet = map.get(token);
 				keywordArticleSet.add(article.getTitle());
+			
+			// if word not in the map, add the word with a new set
 			} else {
 				Set<String> newSet = new HashSet<>();
 				newSet.add(article.getTitle());

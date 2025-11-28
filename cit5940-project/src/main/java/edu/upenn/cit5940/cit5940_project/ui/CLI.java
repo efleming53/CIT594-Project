@@ -1,7 +1,10 @@
 package edu.upenn.cit5940.cit5940_project.ui;
 
-import edu.upenn.cit5940.cit5940_project.processor.*;
+import edu.upenn.cit5940.cit5940_project.Main;
 import edu.upenn.cit5940.cit5940_project.common.dto.*;
+import edu.upenn.cit5940.cit5940_project.logging.Logger;
+import edu.upenn.cit5940.cit5940_project.logging.Logger.LogType;
+import edu.upenn.cit5940.cit5940_project.processor.*;
 
 import java.util.*;
 import java.time.YearMonth;
@@ -13,6 +16,7 @@ public class CLI {
 	private final SearchProcessor sp;
 	private final TopicProcessor tp;
 	private final ArticleProcessor ap;
+	private final Logger logger = Logger.getInstance();
 	
 	public CLI(SearchProcessor sp, TopicProcessor tp, ArticleProcessor ap) {
 		this.scanner = new Scanner(System.in);
@@ -24,14 +28,17 @@ public class CLI {
 
 	public void runCLI() {
 		
+		//CLI init printouts
 		System.out.println("=== Tech News Search Engine ===\n"
 						 + "Initializing n-tier architecture...\n"
-						 + "Loading articles from filepath: " + "filepath\n"
-						 + "articles" + "aticles loaded\n"
-						 + "Architecture initialization complete.\n\n"); //TODO get filepath and number of articles loaded
-			
+						 + "Loading articles from filepath: " + Main.getDataFilePath()
+						 + sp.getNumberOfArticles() + "aticles loaded\n"
+						 + "Architecture initialization complete.\n\n"); 
+		logger.log(LogType.INFO, "CLI Running");
+		
 		while (true) {
 			
+			// main menu loops until valid input
 			System.out.println(
 					  "==================================================\n"
 					+ "                    MAIN MENU                     \n"
@@ -47,32 +54,48 @@ public class CLI {
 			String rawInput = scanner.nextLine();
 			String input = rawInput.trim().toLowerCase();
 			
-			if (input.equals("1")) {
+			if (input.isEmpty()) {
+				logger.log(LogType.WARNING, "User input empty in Main Menu");
+				System.out.println("Error - empty input. Please enter a choice");
+				continue;				
+			}
+			
+			try {
+				Integer.parseInt(input);
+			} catch (NumberFormatException e){
+				logger.log(LogType.WARNING, "User entered non-numeric input in Main Menu");
+				System.out.println("Error - non-numeric input. Please enter a valid number (1-4)");
+				continue;
+			}
+			
+			switch(input) {
+				case "1": 
 				runInteractiveMode();
-				continue;				
-			}
+				break;				
 			
-			if (input.equals("2")) {
+				case "2":
 				runCommandMode();
-				continue;				
-			}
+				break;				
 			
-			if (input.equals("3")) {
+				case "3":
 				displayHelp();
-				continue;				
-			}
+				break;
 					
-			if (input.equals("4")) {
+				case "4":
 				programExit();
 				return;
-			}
+				
 			
-		System.out.println("Invalid entry - Please enter a number option between 1 and 4.\n"
-				+ "\n");
+				default: 
+				logger.log(LogType.WARNING, "User entered invalid input in main menut");
+				System.out.println("Error - Unknown command. Please enter a number option between 1 and 4.\n\n");
+				break;
+			}
 		}
 	}
 	
 	private void runInteractiveMode() {
+		logger.log(LogType.INFO, "Interactive mode started");
 		while (true) {
 			System.out.println("==================================================\n"
 					         + "                INTERACTIVE MODE                  \n"
@@ -96,38 +119,43 @@ public class CLI {
 			String input = scanner.nextLine().trim();
 			
 			if (input.isEmpty()) {
-				System.out.println("Invalid choice - please enter 1-8\n");
-				//logger
+				System.out.println("Error - Input empty, please enter a choice");
+				logger.log(LogType.WARNING, "User input empty in interactive mode");
+				continue;
+			}
+			
+			
+			try {
+				Integer.parseInt(input);
+			} catch (NumberFormatException e){
+				logger.log(LogType.WARNING, "User entered non-numeric input in Interactive Mode");
+				System.out.println("Error - non-numeric input. Please enter a valid number (1-8)");
 				continue;
 			}
 			
 			switch(input) {
 			
 				case "1":
-					//logger
 					String[] keywords = validateKeywords();
 					runSearchCommand(keywords);
 					break;
 					
 				case "2":
-					//logger
 					String prefix = validateWord();
 					runAutocompleteCommand(prefix);
 					break;
 					
 				case "3":
-					//logger
 					YearMonth period = validatePeriod();
 					runTopicsCommand(period);
 					break;
 				
 				case "4":
-					//logger
 					String topic = validateWord();
 					YearMonth startPeriod = validatePeriod();
 					YearMonth endPeriod = validatePeriod();
 					if (startPeriod.isAfter(endPeriod)) {
-						//logger
+						logger.log(LogType.WARNING, "Start period after end period when attempting to run trends operation in Interctive Mode");
 						System.out.println("Invalid choice - start period must not come after end period\n");
 						continue;
 					}

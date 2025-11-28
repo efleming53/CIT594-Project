@@ -7,10 +7,10 @@ import java.io.IOException;
 import java.util.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import edu.upenn.cit5940.cit5940_project.common.dto.Article;
 import edu.upenn.cit5940.cit5940_project.logging.Logger;
 import edu.upenn.cit5940.cit5940_project.logging.Logger.LogType;
-import edu.upenn.cit5940.cit5940_project.common.dto.Article;
 
 public class JsonFileArticleReader implements FileArticleReader {
 	

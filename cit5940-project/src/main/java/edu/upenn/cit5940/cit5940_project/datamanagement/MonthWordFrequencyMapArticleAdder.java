@@ -1,14 +1,15 @@
 package edu.upenn.cit5940.cit5940_project.datamanagement;
 
 import java.util.*;
-import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 
 import edu.upenn.cit5940.cit5940_project.common.dto.Article;
 import edu.upenn.cit5940.cit5940_project.common.dto.DateFormatter;
 import edu.upenn.cit5940.cit5940_project.common.dto.StopWords;
 import edu.upenn.cit5940.cit5940_project.common.dto.Tokenizer;
+
+import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
 
 public class MonthWordFrequencyMapArticleAdder implements ArticleAdder<Map<YearMonth, Map<String, Integer>>> {
 	

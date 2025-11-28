@@ -14,13 +14,13 @@ public class SearchProcessor {
 		this.dr = dr;
 	}
 	
+
+	
 	public List<String> articlesContainingAllKeywords(String[] words){
 		
-
 		Map<String, Set<String>> map = dr.getSearchMap();
 		Set<String> titles = dr.getArticleTitleSet();
-		
-		
+
 		for (int i = 0; i < words.length; i++) {
 			String word = words[i];
 			
@@ -57,6 +57,11 @@ public class SearchProcessor {
 		}
 		//logger
 		return prefixWords;
+	}
+	
+	public Integer getNumberOfArticles() {
+		Set<String> titles = dr.getArticleTitleSet();	
+		return titles.size();
 	}
 
 }

@@ -12,8 +12,8 @@ public class DataRepository {
 	
 	private Set<String> articleTitleSet; 
 	private Map<String, Article> articleIdMap;
-	private Map<String, Set<String>> searchMap;
-	private Trie prefixTrie; //powers autocomplete operation
+	private Map<String, Set<String>> searchMap; // powers search operation. key = word, value = set of titles with word
+	private Trie prefixTrie; //powers autocomplete operation, contains all words
 	private ArticlesTreeMap articlesTreeMap;
 	private Map<YearMonth, Map<String, Integer>> monthWordFrequencyMap; 
 	
