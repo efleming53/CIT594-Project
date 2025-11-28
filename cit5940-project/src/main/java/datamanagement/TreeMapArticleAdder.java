@@ -1,10 +1,10 @@
-package edu.upenn.cit5940.cit5940_project.datamanagement;
+package datamanagement;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-import edu.upenn.cit5940.cit5940_project.common.dto.*;
+import dto.Article;
 
 import java.time.LocalDate;
 

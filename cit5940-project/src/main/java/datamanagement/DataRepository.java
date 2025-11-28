@@ -1,12 +1,13 @@
-package edu.upenn.cit5940.cit5940_project.datamanagement;
+package datamanagement;
 
 import java.util.*;
+
+import dto.Article;
+import logging.Logger;
+import logging.Logger.LogType;
+
 import java.time.LocalDate;
 import java.time.YearMonth;
-
-import edu.upenn.cit5940.cit5940_project.common.dto.*;
-import edu.upenn.cit5940.cit5940_project.logging.Logger;
-import edu.upenn.cit5940.cit5940_project.logging.Logger.LogType;
 
 public class DataRepository {
 	

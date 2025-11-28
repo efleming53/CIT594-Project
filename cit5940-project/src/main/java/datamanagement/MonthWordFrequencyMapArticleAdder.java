@@ -1,11 +1,11 @@
-package edu.upenn.cit5940.cit5940_project.datamanagement;
+package datamanagement;
 
 import java.util.*;
 
-import edu.upenn.cit5940.cit5940_project.common.dto.Article;
-import edu.upenn.cit5940.cit5940_project.common.dto.DateFormatter;
-import edu.upenn.cit5940.cit5940_project.common.dto.StopWords;
-import edu.upenn.cit5940.cit5940_project.common.dto.Tokenizer;
+import dto.Article;
+import dto.DateFormatter;
+import dto.StopWords;
+import dto.Tokenizer;
 
 import java.time.LocalDate;
 import java.time.YearMonth;

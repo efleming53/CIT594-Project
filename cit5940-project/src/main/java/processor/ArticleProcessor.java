@@ -1,10 +1,12 @@
-package edu.upenn.cit5940.cit5940_project.processor;
+package processor;
 
 import java.util.*;
-import java.time.LocalDate;
 
-import edu.upenn.cit5940.cit5940_project.common.dto.*;
-import edu.upenn.cit5940.cit5940_project.datamanagement.*;
+import datamanagement.ArticlesTreeMap;
+import datamanagement.DataRepository;
+import dto.Article;
+
+import java.time.LocalDate;
 
 public class ArticleProcessor {
 	

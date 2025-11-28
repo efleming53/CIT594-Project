@@ -1,12 +1,17 @@
-package edu.upenn.cit5940.cit5940_project.ui;
+package ui;
 
 import edu.upenn.cit5940.cit5940_project.Main;
-import edu.upenn.cit5940.cit5940_project.common.dto.*;
-import edu.upenn.cit5940.cit5940_project.logging.Logger;
-import edu.upenn.cit5940.cit5940_project.logging.Logger.LogType;
-import edu.upenn.cit5940.cit5940_project.processor.*;
+import logging.Logger;
+import logging.Logger.LogType;
+import processor.*;
 
 import java.util.*;
+
+import dto.Article;
+import dto.DateFormatter;
+import dto.FreqPair;
+import dto.Tokenizer;
+
 import java.time.YearMonth;
 import java.time.LocalDate;
 

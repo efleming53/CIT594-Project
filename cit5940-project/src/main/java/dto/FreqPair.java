@@ -1,4 +1,4 @@
-package edu.upenn.cit5940.cit5940_project.common.dto;
+package dto;
 
 import java.util.Comparator;
 

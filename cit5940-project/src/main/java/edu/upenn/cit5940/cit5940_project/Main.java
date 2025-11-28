@@ -2,13 +2,12 @@ package edu.upenn.cit5940.cit5940_project;
 
 import java.io.IOException;
 
-import edu.upenn.cit5940.cit5940_project.datamanagement.*;
-import edu.upenn.cit5940.cit5940_project.logging.Logger;
-import edu.upenn.cit5940.cit5940_project.logging.Logger.LogType;
-import edu.upenn.cit5940.cit5940_project.processor.ArticleProcessor;
-import edu.upenn.cit5940.cit5940_project.processor.SearchProcessor;
-import edu.upenn.cit5940.cit5940_project.processor.TopicProcessor;
-import edu.upenn.cit5940.cit5940_project.ui.*;
+import datamanagement.*;
+import logging.*;
+import logging.Logger.LogType;
+import processor.*;
+import ui.*;
+
 
 public class Main {
 	

@@ -1,10 +1,12 @@
-package edu.upenn.cit5940.cit5940_project.processor;
+package processor;
 
 import java.util.*;
-import java.time.LocalTime;
 
-import edu.upenn.cit5940.cit5940_project.common.dto.*;
-import edu.upenn.cit5940.cit5940_project.datamanagement.*;
+import datamanagement.DataRepository;
+import datamanagement.Trie;
+import dto.StopWords;
+
+import java.time.LocalTime;
 
 public class SearchProcessor {
 	
