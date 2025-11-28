@@ -1,12 +1,12 @@
 package ui;
 
-import edu.upenn.cit5940.cit5940_project.Main;
 import logging.Logger;
 import logging.Logger.LogType;
 import processor.*;
 
 import java.util.*;
 
+import cit5940.Main;
 import dto.Article;
 import dto.DateFormatter;
 import dto.FreqPair;

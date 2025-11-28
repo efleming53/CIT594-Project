@@ -1,4 +1,4 @@
-package edu.upenn.cit5940.cit5940_project;
+package cit5940;
 
 import java.io.IOException;
 
