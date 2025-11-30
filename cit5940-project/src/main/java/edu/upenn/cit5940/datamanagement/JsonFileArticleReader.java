@@ -1,4 +1,4 @@
-package datamanagement;
+package edu.upenn.cit5940.datamanagement;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -8,9 +8,11 @@ import java.util.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import dto.Article;
-import logging.Logger;
-import logging.Logger.LogType;
+import edu.upenn.cit5940.common.dto.*;
+import edu.upenn.cit5940.logging.*;
+import edu.upenn.cit5940.logging.Logger.LogType;
+
+
 
 public class JsonFileArticleReader implements FileArticleReader {
 	

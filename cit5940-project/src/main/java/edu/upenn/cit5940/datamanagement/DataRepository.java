@@ -1,10 +1,10 @@
-package datamanagement;
+package edu.upenn.cit5940.datamanagement;
 
 import java.util.*;
 
-import dto.Article;
-import logging.Logger;
-import logging.Logger.LogType;
+import edu.upenn.cit5940.common.dto.*;
+import edu.upenn.cit5940.logging.*;
+import edu.upenn.cit5940.logging.Logger.LogType;
 
 import java.time.LocalDate;
 import java.time.YearMonth;

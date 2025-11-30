@@ -1,4 +1,4 @@
-package logging;
+package edu.upenn.cit5940.logging;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

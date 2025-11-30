@@ -1,6 +1,6 @@
-package datamanagement;
+package edu.upenn.cit5940.datamanagement;
 
-import dto.Article;
+import edu.upenn.cit5940.common.dto.*;
 
 public interface ArticleAdder<T> {
 	

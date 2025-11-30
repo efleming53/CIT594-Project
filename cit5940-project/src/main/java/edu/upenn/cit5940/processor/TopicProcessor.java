@@ -1,9 +1,9 @@
-package processor;
+package edu.upenn.cit5940.processor;
 
 import java.util.*;
 
-import datamanagement.DataRepository;
-import dto.FreqPair;
+import edu.upenn.cit5940.datamanagement.*;
+import edu.upenn.cit5940.common.dto.*;
 
 import java.time.LocalDate;
 import java.time.YearMonth;

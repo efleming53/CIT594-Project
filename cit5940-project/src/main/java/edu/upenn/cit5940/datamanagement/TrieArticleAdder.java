@@ -1,8 +1,7 @@
-package datamanagement;
+package edu.upenn.cit5940.datamanagement;
 
-import dto.Article;
-import dto.StopWords;
-import dto.Tokenizer;
+import edu.upenn.cit5940.common.dto.*;
+
 
 public class TrieArticleAdder implements ArticleAdder<Trie> {
 	

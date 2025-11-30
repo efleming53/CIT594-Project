@@ -1,4 +1,4 @@
-package datamanagement;
+package edu.upenn.cit5940.datamanagement;
 
 import java.util.*;
 import java.io.FileReader;
@@ -6,9 +6,9 @@ import java.io.IOException;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 
-import dto.Article;
-import logging.Logger;
-import logging.Logger.LogType;
+import edu.upenn.cit5940.common.dto.*;
+import edu.upenn.cit5940.logging.*;
+import edu.upenn.cit5940.logging.Logger.LogType;
 
 
 public class CsvFileArticleReader implements FileArticleReader {

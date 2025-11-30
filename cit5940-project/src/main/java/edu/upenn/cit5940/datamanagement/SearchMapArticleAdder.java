@@ -1,10 +1,9 @@
-package datamanagement;
+package edu.upenn.cit5940.datamanagement;
 
 import java.util.*;
 
-import dto.Article;
-import dto.StopWords;
-import dto.Tokenizer;
+import edu.upenn.cit5940.common.dto.*;
+
 
 
 public class SearchMapArticleAdder implements ArticleAdder<Map<String, Set<String>>> {

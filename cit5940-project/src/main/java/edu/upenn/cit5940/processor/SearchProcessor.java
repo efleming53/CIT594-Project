@@ -1,10 +1,10 @@
-package processor;
+package edu.upenn.cit5940.processor;
 
 import java.util.*;
 
-import datamanagement.DataRepository;
-import datamanagement.Trie;
-import dto.StopWords;
+import edu.upenn.cit5940.common.dto.*;
+import edu.upenn.cit5940.datamanagement.*;
+
 
 import java.time.LocalTime;
 

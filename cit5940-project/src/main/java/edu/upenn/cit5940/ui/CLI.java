@@ -1,16 +1,14 @@
-package ui;
+package edu.upenn.cit5940.ui;
 
-import logging.Logger;
-import logging.Logger.LogType;
-import processor.*;
+import edu.upenn.cit5940.logging.*;
+import edu.upenn.cit5940.logging.Logger.LogType;
+import edu.upenn.cit5940.processor.*;
 
 import java.util.*;
 
-import cit5940.Main;
-import dto.Article;
-import dto.DateFormatter;
-import dto.FreqPair;
-import dto.Tokenizer;
+import edu.upenn.cit5940.*;
+import edu.upenn.cit5940.common.dto.*;
+
 
 import java.time.YearMonth;
 import java.time.LocalDate;
@@ -602,4 +600,3 @@ public class CLI {
 						 + "Number of Articles: " + numArticles + "\n");
 	}	
 }
-

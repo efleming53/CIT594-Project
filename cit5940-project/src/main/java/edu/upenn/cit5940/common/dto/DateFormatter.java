@@ -1,4 +1,4 @@
-package dto;
+package edu.upenn.cit5940.common.dto;
 
 import java.time.LocalDate;
 import java.time.YearMonth;

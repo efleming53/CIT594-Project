@@ -1,12 +1,13 @@
-package cit5940;
+package edu.upenn.cit5940;
 
 import java.io.IOException;
 
-import datamanagement.*;
-import logging.*;
-import logging.Logger.LogType;
-import processor.*;
-import ui.*;
+import edu.upenn.cit5940.common.dto.*;
+import edu.upenn.cit5940.logging.*;
+import edu.upenn.cit5940.logging.Logger.LogType;
+import edu.upenn.cit5940.processor.*;
+import edu.upenn.cit5940.ui.*;
+import edu.upenn.cit5940.datamanagement.*;
 
 
 public class Main {
