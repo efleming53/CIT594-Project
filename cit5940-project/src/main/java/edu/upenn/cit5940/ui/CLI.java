@@ -54,6 +54,10 @@ public class CLI {
 					+ "==================================================\n"
 					+ "Select option using 1-4\n");
 			
+			if (!scanner.hasNextLine()) {
+				return;
+			}
+			
 			String rawInput = scanner.nextLine();
 			String input = rawInput.trim().toLowerCase();
 			
@@ -118,6 +122,10 @@ public class CLI {
 					         + "8. Back to Main Menu\n "
 					         + "----------------------------------------\n "
 					         + "Select a service (1-8):\n");
+			
+			if (!scanner.hasNextLine()) {
+				return;
+			}
 			
 			String input = scanner.nextLine().trim();
 			
@@ -205,6 +213,11 @@ public class CLI {
 		
 		while (true) {
 			System.out.println("Please enter keywords to search for separated by a space:\n");
+			
+			if (!scanner.hasNextLine()) {
+				return null;
+			}
+			
 			String input = scanner.nextLine();
 			String[] keywords = Tokenizer.tokenize(input);
 			
@@ -222,6 +235,11 @@ public class CLI {
 		
 		while (true) {
 			System.out.println("Please enter a valid word as input:\n");
+			
+			if (!scanner.hasNextLine()) {
+				return null;
+			}
+			
 			String input = scanner.nextLine().trim();
 			
 			if (input.isEmpty()) {
@@ -237,6 +255,11 @@ public class CLI {
 		
 		while (true) {
 			System.out.println("Please enter period in format YYYY-MM:\n");
+			
+			if (!scanner.hasNextLine()) {
+				return null;
+			}
+			
 			String input = scanner.nextLine().trim();
 			
 			if (input.isEmpty()) {
@@ -260,6 +283,11 @@ public class CLI {
 		
 		while (true) {
 			System.out.println("Please enter date in format YYYY-MM-DD:\n");
+			
+			if (!scanner.hasNextLine()) {
+				return null;
+			}
+			
 			String input = scanner.nextLine().trim();
 			
 			if (input.isEmpty()) {
@@ -301,6 +329,10 @@ public class CLI {
 							 + "8. Help\n"
 							 + "9. Menu\n"
 							 + "\n");
+			
+			if (!scanner.hasNextLine()) {
+				return;
+			}
 			
 			String[] input = Tokenizer.tokenize(scanner.nextLine());
 			
@@ -465,8 +497,12 @@ public class CLI {
 							 + "     • Date: YYYY-MM-DD (e.g., 2023-12-01)\n"
 							 + "Press Enter to return to main menu...");
 			
+			if (!scanner.hasNextLine()) {
+				return;
+			}
+			
 			String input = scanner.nextLine();
-			//TODO: require enter to return to main menu
+			
 			if (input.trim().isEmpty()) {
 				return;
 			}
@@ -561,7 +597,7 @@ public class CLI {
 	private void runArticlesCommand(LocalDate start, LocalDate end) {
 		
 		
-		Set<String> titlesSet = ap.getArticleTitlesInPeriod(start, end);
+		Set<String> titlesSet = ap.getArticleTitlesInDateRange(start, end);
 			
 		if (titlesSet.isEmpty()) {
 			System.out.println("No titles found between dates " + start + " - " + end + ".\n");
@@ -585,6 +621,7 @@ public class CLI {
 		
 		if (article == null) {
 			System.out.println("Article not found.\n");
+			return;
 		}
 		
 		System.out.println("URI: " + article.getUri() + "\n" +

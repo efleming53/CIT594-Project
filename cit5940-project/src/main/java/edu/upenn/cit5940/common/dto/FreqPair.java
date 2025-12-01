@@ -2,7 +2,9 @@ package edu.upenn.cit5940.common.dto;
 
 import java.util.Comparator;
 
+// FreqPair associates a word with its frequency to support topics operation
 public class FreqPair {
+	
 	String word;
 	Integer frequency;
 	

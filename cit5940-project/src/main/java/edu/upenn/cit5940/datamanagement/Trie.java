@@ -2,13 +2,14 @@ package edu.upenn.cit5940.datamanagement;
 
 import java.util.*;
 
+// custom tree class for prefixTrie to support autocomplete operation
 public class Trie {
 
     // inner class
     private class Node {
+    	
         private HashMap<Character, Node> children = new HashMap<>();
 
-        // TODO (provide starting value)
         private boolean endOfWord = false;
 
     }
@@ -16,7 +17,6 @@ public class Trie {
     // root node (has no value)
     private Node root = new Node();
 
-    // TODO
     public void insertWord(String word) {
     	
     	Node current = root; // set current node starting at root
@@ -48,7 +48,6 @@ public class Trie {
         }
     }
 
-    // TODO
     public boolean findWord(String word) {
     	
     	Node current = root; // set current node starting at root
@@ -79,7 +78,6 @@ public class Trie {
     	}
     }
 
-    // TODO
     public void deleteWord(String word) {
     	
     deleteWordHelper(word, 0, root);
@@ -88,7 +86,6 @@ public class Trie {
     	
     }
 
-    // TODO
     public boolean deleteWordHelper(String word, int index, Node curNode) {
     	
     	// base case, reached end of word
@@ -118,7 +115,7 @@ public class Trie {
     	
     }
 
-    // TODO
+
     public List<String> allWords() {
   
     	StringBuilder sb = new StringBuilder(); // init stringbuilder
@@ -129,7 +126,7 @@ public class Trie {
         return words;
     }
 
-    // TODO
+
     public void allWordsHelper(Node node, StringBuilder accumulated, List<String> myList) {
     	
     	// base case - if EOW, add accumulated string to list

@@ -4,6 +4,7 @@ import java.util.*;
 
 import java.time.LocalDate;
 
+// TreeMap that will store data for articles operation
 public class ArticlesTreeMap {
 
     private TreeMap<LocalDate, List<String>> articlesMap;

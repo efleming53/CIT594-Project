@@ -1,5 +1,6 @@
 package edu.upenn.cit5940.common.dto;
 
+// tokenizes string input into an array of strings
 public final class Tokenizer {
 	
 	private Tokenizer() {};

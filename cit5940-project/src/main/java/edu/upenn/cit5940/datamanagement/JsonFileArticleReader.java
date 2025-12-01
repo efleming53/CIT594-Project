@@ -1,19 +1,16 @@
 package edu.upenn.cit5940.datamanagement;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
 import java.util.*;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import edu.upenn.cit5940.common.dto.*;
 import edu.upenn.cit5940.logging.*;
 import edu.upenn.cit5940.logging.Logger.LogType;
 
-
-
+// reads articles from a json file
 public class JsonFileArticleReader implements FileArticleReader {
 	
 	String filepath;
@@ -25,28 +22,35 @@ public class JsonFileArticleReader implements FileArticleReader {
 	}
 	
 	@Override
+	// reads and loads articles from filepath into DataRepository
 	public void read() throws IOException{
 		
 		List<Article> articles = new ArrayList<>();
 		ObjectMapper mapper = new ObjectMapper();
 		
 		try {
+			
 			byte[] jsonData = Files.readAllBytes(Paths.get(filepath));	
 			List<Article> allArticles = mapper.readValue(jsonData, new TypeReference<List<Article>>() {});
 			
 			for (Article article : allArticles) {
-				//validate article
+				// validate record is correct size and contains required fields (uri, date, title, body)
 				if (article.getUri()== null || article.getUri().isBlank() ||
 					article.getDate() == null ||
 					article.getTitle() == null || article.getTitle().isBlank() ||
 					article.getBody() == null) {
+					
 						logger.log(LogType.WARNING, "Error parsing record number " + articleNum);
 						articleNum++;
 						continue;
 					}
+				
 				articles.add(article);
 			}
+		
+		// log error and return if error opening file
 		} catch (IOException error) {
+			
 			logger.log(LogType.ERROR, "Error opening JSON file: " + filepath);
 			return;
 		}

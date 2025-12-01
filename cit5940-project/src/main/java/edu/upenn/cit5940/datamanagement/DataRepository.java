@@ -5,18 +5,17 @@ import java.util.*;
 import edu.upenn.cit5940.common.dto.*;
 import edu.upenn.cit5940.logging.*;
 import edu.upenn.cit5940.logging.Logger.LogType;
-
-import java.time.LocalDate;
 import java.time.YearMonth;
 
+// holds all datastructures and data for program
 public class DataRepository {
 	
-	private Set<String> articleTitleSet; 
-	private Map<String, Article> articleIdMap;
-	private Map<String, Set<String>> searchMap; // powers search operation. key = word, value = set of titles with word
-	private Trie prefixTrie; //powers autocomplete operation, contains all words
-	private ArticlesTreeMap articlesTreeMap;
-	private Map<YearMonth, Map<String, Integer>> monthWordFrequencyMap; 
+	private Set<String> articleTitleSet; // set of all titles, used to get number of articles in DataRepository
+	private Map<String, Article> articleIdMap; // data for article operation. Key = uri, Value = article
+	private Map<String, Set<String>> searchMap; // data for search operation. Key = word, Value = set of titles with word
+	private Trie prefixTrie; // data for autocomplete operation, contains all words
+	private ArticlesTreeMap articlesTreeMap; // data for articles operation. Key = date, Value = list of titles
+	private Map<YearMonth, Map<String, Integer>> monthWordFrequencyMap; // data for topics and trends operations. Key = month, Value = map containing word/frequency pairs
 	
 	Logger logger = Logger.getInstance();
 	
@@ -27,7 +26,6 @@ public class DataRepository {
 		prefixTrie = new Trie();
 		articlesTreeMap = new ArticlesTreeMap();
 		monthWordFrequencyMap = new HashMap<>();
-		
 	}
 	
 	private static DataRepository dataRepo = new DataRepository();
@@ -36,14 +34,15 @@ public class DataRepository {
 		return dataRepo;
 	}
 	
+	// loads provided list of articles into each data structure
 	public void loadArticles(List<Article> articles) {
-		
 		
 		SearchMapArticleAdder searchMapAdder = SearchMapArticleAdder.getInstance();
 		TrieArticleAdder trieAdder = TrieArticleAdder.getInstance();
 		TreeMapArticleAdder treeMapAdder = TreeMapArticleAdder.getInstance();
 		MonthWordFrequencyMapArticleAdder monthWordFreqAdder = MonthWordFrequencyMapArticleAdder.getInstance();
 		
+		// for each article, call respective "addArticle" method for each data structure
 		for (Article article : articles) {
 			articleTitleSet.add(article.getTitle());
 			articleIdMap.put(article.getUri(), article);
@@ -51,7 +50,8 @@ public class DataRepository {
 			trieAdder.addArticle(article, prefixTrie);
 			treeMapAdder.addArticle(article, articlesTreeMap);
 			monthWordFreqAdder.addArticle(article, monthWordFrequencyMap);
-		}		
+		}	
+		
 		logger.log(LogType.INFO, articleTitleSet.size() + " articles loaded into DataRepository");
 	}
 	

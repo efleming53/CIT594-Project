@@ -1,13 +1,10 @@
 package edu.upenn.cit5940.datamanagement;
 
 import java.util.*;
-
 import edu.upenn.cit5940.common.dto.*;
-
-import java.time.LocalDate;
 import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 
+// adds articles to map in support of topics and trends operations
 public class MonthWordFrequencyMapArticleAdder implements ArticleAdder<Map<YearMonth, Map<String, Integer>>> {
 	
 	private static final MonthWordFrequencyMapArticleAdder INSTANCE = new MonthWordFrequencyMapArticleAdder();
@@ -18,13 +15,10 @@ public class MonthWordFrequencyMapArticleAdder implements ArticleAdder<Map<YearM
 		return INSTANCE;
 	}
 	
-	// adds words in given article to monthWordFrequencyMap
+	// tokenizes words, then calls helper to add articles
 	public void addArticle(Article article, Map<YearMonth, Map<String, Integer>> map) {
 		
 		String date = article.getDate().toString();
-		
-		// need to change raw date in article to YYYY-MM??
-		
 		String[] titleTokens = Tokenizer.tokenize(article.getTitle());
 		String[] bodyTokens = Tokenizer.tokenize(article.getBody());
 		
@@ -33,6 +27,7 @@ public class MonthWordFrequencyMapArticleAdder implements ArticleAdder<Map<YearM
 		
 	}
 	
+	// logic for adding article to monthWordFrequencyMap
 	private static void addArticleHelper(String[] tokens, String rawDate, Map<YearMonth, Map<String, Integer>> map) {
 		
 		YearMonth date = DateFormatter.formatPeriod(rawDate);
@@ -47,6 +42,7 @@ public class MonthWordFrequencyMapArticleAdder implements ArticleAdder<Map<YearM
 		
 		for (String token : tokens) {
 			
+			// skips stopwords
 			if (StopWords.WORDS.contains(token)) {
 				continue;
 			}

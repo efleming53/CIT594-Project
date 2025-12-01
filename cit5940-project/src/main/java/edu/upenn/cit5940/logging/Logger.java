@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
 
+// records important program events to specified log filepath
 public class Logger {
 	
 	String articleFilePath;
@@ -40,13 +41,21 @@ public class Logger {
 		logFilePath = filepath;
 	}
 	
+	// writes current time, log type, and provided message to logFilePath
 	public void log(LogType type, String context) {
 		
+		// validate path
+		if (logFilePath == null || logFilePath.isBlank()) {
+		    return;
+		}
+		
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFilePath, true))){
+			
 			writer.write(LocalDateTime.now() + " " + type + " " + context);
 			writer.newLine();
+			
 		} catch (IOException e) {
-			//TODO catch error
+			return; // silently ignore logging error, cannot log an error on logging
 		}
 	}
 }

@@ -2,6 +2,7 @@ package edu.upenn.cit5940.common.dto;
 
 import java.util.*;
 
+// set of words that do not get indexed into structures that require filtering out stopwords
 public class StopWords {
 	
 	public static final Set<String> WORDS = Set.of(

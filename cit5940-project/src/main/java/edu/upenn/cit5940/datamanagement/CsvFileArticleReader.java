@@ -5,12 +5,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
-
 import edu.upenn.cit5940.common.dto.*;
 import edu.upenn.cit5940.logging.*;
 import edu.upenn.cit5940.logging.Logger.LogType;
 
-
+// reads articles from csv file
 public class CsvFileArticleReader implements FileArticleReader {
 	
 	Logger logger = Logger.getInstance();
@@ -22,14 +21,17 @@ public class CsvFileArticleReader implements FileArticleReader {
 	}
 
 	@Override
+	// reads and loads articles from filepath into DataRepository
 	public void read(){
+		
 		List<Article> articles = new ArrayList<>();
 		
 		try (CSVReader csvReader = new CSVReader(new FileReader(filepath));) {
+			
 			String[] record;
 			
 			while ((record = csvReader.readNext()) != null) {
-				// validate record
+				// validate record is correct size and contains required fields (uri, date, title, body)
 				if (record.length != 16 ||
 					record[0] == null ||
 					record[0].isBlank() ||
@@ -46,15 +48,17 @@ public class CsvFileArticleReader implements FileArticleReader {
 				recordNum++;
 			}
 			
-		// switch to calling logger to log warning		
+		// log error and return if error opening file		
 		} catch (IOException | CsvValidationException error) {
 			logger.log(LogType.ERROR, "Error opening CSV file: " + filepath);
 			return;
 		}
 		
 		DataRepository dr = DataRepository.getInstance();
+		
 		//load articles into the DataRepository
 		dr.loadArticles(articles);
+		
 		return;
 	}
 }

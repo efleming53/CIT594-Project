@@ -2,7 +2,7 @@ package edu.upenn.cit5940.datamanagement;
 
 import edu.upenn.cit5940.common.dto.*;
 
-
+// adds articles to prefixTrie to support autocomplete operation
 public class TrieArticleAdder implements ArticleAdder<Trie> {
 	
 	private static final TrieArticleAdder INSTANCE = new TrieArticleAdder();
@@ -13,6 +13,7 @@ public class TrieArticleAdder implements ArticleAdder<Trie> {
 		return INSTANCE;
 	}
 	
+	// tokenizes words, then calls helper to add articles
 	public void addArticle(Article article, Trie trie) {
 		
 		String[] titleTokens = Tokenizer.tokenize(article.getTitle());
@@ -22,6 +23,7 @@ public class TrieArticleAdder implements ArticleAdder<Trie> {
 		addArticleHelper(bodyTokens, trie);
 	}
 	
+	// logic for adding article to monthWordFrequencyMap
 	private void addArticleHelper(String[] tokens, Trie trie) {
 		
 		for (String token : tokens) {
@@ -29,7 +31,7 @@ public class TrieArticleAdder implements ArticleAdder<Trie> {
 			if (StopWords.WORDS.contains(token)) {
 				continue;
 			}
-			trie.insertWord(token);
+			trie.insertWord(token); // utilize custom trie's insertWord method to add each word
 		}
 	}
 

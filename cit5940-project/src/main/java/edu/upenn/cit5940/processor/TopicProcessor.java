@@ -84,20 +84,6 @@ public class TopicProcessor {
 		}
 		//logger
 		return frequencies;
-	}
-	
-	private LocalDate parseDate(String dateStr) {
-		
-		try {
-			//TODO: null check parse
-			LocalDate date = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("yyyy-MM"));
-			return date;
-			
-		} catch (DateTimeParseException error) {
-			// call logger
-			return null;
-		}
-	
 	}	
 	
     public class FreqPairComparator implements Comparator<FreqPair> {

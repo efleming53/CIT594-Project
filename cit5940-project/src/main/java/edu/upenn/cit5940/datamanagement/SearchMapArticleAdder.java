@@ -1,11 +1,9 @@
 package edu.upenn.cit5940.datamanagement;
 
 import java.util.*;
-
 import edu.upenn.cit5940.common.dto.*;
 
-
-
+// adds articles to searchMap to power search operation
 public class SearchMapArticleAdder implements ArticleAdder<Map<String, Set<String>>> {
 	
 	private static final SearchMapArticleAdder INSTANCE = new SearchMapArticleAdder();
@@ -16,6 +14,7 @@ public class SearchMapArticleAdder implements ArticleAdder<Map<String, Set<Strin
 		return INSTANCE;
 	}
 
+	// tokenizes words, then calls helper to add articles
 	public void addArticle(Article article, Map<String, Set<String>> map) {
 		
 		String[] titleTokens = Tokenizer.tokenize(article.getTitle());
@@ -26,11 +25,12 @@ public class SearchMapArticleAdder implements ArticleAdder<Map<String, Set<Strin
 		
 	}
 	
+	// logic for adding articles to searchMap
 	private static void addArticleHelper(String[] tokens, Article article, Map<String, Set<String>> map) {
 		
 		for (String token : tokens) {
 			
-			//if word is a Stopword, skip it so it is not in the map
+			//if word is a stopword, skip it so it is not in the map
 			if (StopWords.WORDS.contains(token)){
 				continue;
 			}
