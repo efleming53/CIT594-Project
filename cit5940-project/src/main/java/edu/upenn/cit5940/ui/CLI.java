@@ -35,7 +35,7 @@ public class CLI {
 		System.out.println("=== Tech News Search Engine ===\n"
 						 + "Initializing n-tier architecture...\n"
 						 + "Loading articles from filepath: " + Main.getDataFilePath()
-						 + sp.getNumberOfArticles() + "aticles loaded\n"
+						 + ap.getNumberOfArticles() + "aticles loaded\n"
 						 + "Architecture initialization complete.\n\n"); 
 		logger.log(LogType.INFO, "CLI Running");
 		
@@ -153,18 +153,43 @@ public class CLI {
 					
 				case "2":
 					String prefix = validateWord();
+					if (prefix == null) {
+					    System.out.println("Error: empty input - please enter a choice");
+					    logger.log(LogType.WARNING, "Null input entered in Interactive Mode");
+					    return;
+					}
 					runAutocompleteCommand(prefix);
 					break;
 					
 				case "3":
 					YearMonth period = validatePeriod();
+					if (period == null) {
+					    System.out.println("Error: empty input - please enter a choice");
+					    logger.log(LogType.WARNING, "Null input entered in Interactive Mode");
+					    return;
+					}
 					runTopicsCommand(period);
 					break;
 				
 				case "4":
 					String topic = validateWord();
+					if (topic == null) {
+					    System.out.println("Error: empty input - please enter a choice");
+					    logger.log(LogType.WARNING, "Null input entered in Interactive Mode");
+					    return;
+					}
 					YearMonth startPeriod = validatePeriod();
+					if (startPeriod == null) {
+					    System.out.println("Error: empty input - please enter a choice");
+					    logger.log(LogType.WARNING, "Null input entered in Interactive Mode");
+					    return;
+					}
 					YearMonth endPeriod = validatePeriod();
+					if (endPeriod == null) {
+					    System.out.println("Error: empty input - please enter a choice");
+					    logger.log(LogType.WARNING, "Null input entered in Interactive Mode");
+					    return;
+					}
 					if (startPeriod.isAfter(endPeriod)) {
 						logger.log(LogType.WARNING, "Start period after end period when attempting to run trends operation in Interctive Mode");
 						System.out.println("Invalid choice - start period must not come after end period\n");
@@ -176,7 +201,17 @@ public class CLI {
 				case "5":
 					//logger
 					LocalDate startDate = validateDate();
+					if (startDate == null) {
+					    System.out.println("Error: empty input - please enter a choice");
+					    logger.log(LogType.WARNING, "Null input entered in Interactive Mode");
+					    return;
+					}
 					LocalDate endDate = validateDate();
+					if (endDate == null) {
+					    System.out.println("Error: empty input - please enter a choice");
+					    logger.log(LogType.WARNING, "Null input entered in Interactive Mode");
+					    return;
+					}
 					if (startDate.isAfter(endDate)) {
 						//logger
 						System.out.println("Invalid choice - start date must not come after end date\n");
@@ -188,6 +223,11 @@ public class CLI {
 				case "6":
 					//logger
 					String uri = validateWord();
+					if (uri == null) {
+					    System.out.println("Error: empty input - please enter a choice");
+					    logger.log(LogType.WARNING, "Null input entered in Interactive Mode");
+					    return;
+					}
 					runArticleCommand(uri);
 					break;
 					
@@ -316,19 +356,8 @@ public class CLI {
 			System.out.println("===============================\n"
 							 + "        COMMAND MODE           \n"
 							 + "===============================\n"
-							 + "\n"
-							 + "Please select a command using 1-9\n"
-							 + "\n"
-							 + "1. Search\n"
-							 + "2. Autocomplete\n"
-							 + "3. Topics\n"
-							 + "4. Trends\n"
-							 + "5. Articles\n"
-							 + "6. Article\n"
-							 + "7. Stats\n"
-							 + "8. Help\n"
-							 + "9. Menu\n"
-							 + "\n");
+							 + "Enter commands directly. Type 'help' for available commands.\n"
+							 + "Type 'menu' to return to the main menu.");
 			
 			if (!scanner.hasNextLine()) {
 				return;

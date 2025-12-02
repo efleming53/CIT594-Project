@@ -60,10 +60,4 @@ public class SearchProcessor {
 		
 		return prefixWords;
 	}
-	
-	public Integer getNumberOfArticles() {
-		Set<String> titles = dr.getArticleTitleSet();	
-		return titles.size();
-	}
-
 }
